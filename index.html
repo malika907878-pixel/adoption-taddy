@@ -3,321 +3,802 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>Workshop admin | Adoption Tales Co.</title>
+<title>Adoption Tales Co. — Handcrafted Teddy Bears</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Gloock&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/styles.css">
-<link rel="stylesheet" href="/css/admin.css">
-</head>
-<body class="admin">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3E9D2;
+    --paper-dark:#E8DAB8;
+    --ink-green:#233826;
+    --ink-green-deep:#182319;
+    --gold:#C0913A;
+    --rose:#C17A5E;
+    --charcoal:#2A241C;
+    --stamp-red:#9C3B2E;
+    --line: rgba(42,36,28,0.18);
+    --shadow: 0 18px 40px rgba(24,35,25,0.18);
+  }
 
-<div id="loginView" hidden>
-  <form class="a-login" id="loginForm">
-    <h1>Workshop admin</h1>
-    <p class="sub">Sign in to manage bears, adoptions and messages.</p>
-    <div class="field"><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required></div>
-    <p class="form-status bad" id="loginMsg" role="alert" style="margin:10px 0"></p>
-    <button class="btn btn-gold" type="submit" style="width:100%">Sign in</button>
-    <p class="sub" style="margin-top:18px;font-size:.88rem"><a href="/">Back to the site</a></p>
-  </form>
-</div>
+  *{margin:0;padding:0;box-sizing:border-box;}
 
-<div id="appView" class="a-wrap" hidden>
-  <div class="a-top">
-    <h1>Workshop admin</h1>
-    <div class="row-actions">
-      <a class="btn btn-line mini" href="/" target="_blank" rel="noopener">View site</a>
-      <button class="btn btn-line mini" id="refresh" type="button">Refresh</button>
-      <button class="btn btn-line mini" id="logout" type="button">Sign out</button>
-    </div>
-  </div>
+  html{scroll-behavior:smooth;}
 
-  <div class="banner" id="memBanner" hidden>Data is currently stored in temporary memory and will reset. Connect Supabase (see README) to keep orders and bears permanently.</div>
+  body{
+    background:var(--ink-green-deep);
+    color:var(--charcoal);
+    font-family:'Lora', serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
 
-  <div class="stats" id="stats"></div>
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
 
-  <div class="tabs" role="tablist" id="tabs">
-    <button class="chip" role="tab" data-tab="orders" aria-pressed="true">Adoptions</button>
-    <button class="chip" role="tab" data-tab="bears" aria-pressed="false">Bears</button>
-    <button class="chip" role="tab" data-tab="messages" aria-pressed="false">Messages</button>
-    <button class="chip" role="tab" data-tab="subs" aria-pressed="false">Newsletter</button>
-  </div>
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
 
-  <div id="panel"></div>
-</div>
+  .eyebrow{
+    font-family:'Special Elite', monospace;
+    text-transform:uppercase;
+    letter-spacing:0.18em;
+    font-size:0.72rem;
+    color:var(--gold);
+  }
 
-<script src="/js/admin.js" defer></script>
-</body>
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adoption Tales Co. | Handcrafted Teddy Bears with Adoption Certificates</title>
-<meta name="description" content="Handcrafted teddy bears, stitched one at a time. Each bear has a name, a birthday and a personality, and comes with an adoption certificate in your family's name.">
-<meta name="theme-color" content="#0E1B15">
-<meta property="og:title" content="Adoption Tales Co.">
-<meta property="og:description" content="Every bear has a story. You write the next chapter.">
-<meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='13' cy='11' r='7' fill='%23D9A441'/%3E%3Ccircle cx='35' cy='11' r='7' fill='%23D9A441'/%3E%3Ccircle cx='24' cy='27' r='17' fill='%23F1E7CF'/%3E%3Ccircle cx='18' cy='25' r='2.6' fill='%23241F18'/%3E%3Ccircle cx='30' cy='25' r='2.6' fill='%23241F18'/%3E%3Cellipse cx='24' cy='32' rx='4.5' ry='3' fill='%23A8372A'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Figtree:wght@400;500;600;700&family=Gloock&family=IM+Fell+English:ital@0;1&family=Special+Elite&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/styles.css">
+  a{color:inherit;}
+
+  img,svg{display:block;max-width:100%;}
+
+  /* ---------- Texture ---------- */
+  .paper-texture{
+    background-color:var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(42,36,28,0.035) 0, transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(42,36,28,0.03) 0, transparent 45%);
+  }
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:var(--ink-green-deep);
+    border-bottom:1px solid rgba(243,233,210,0.14);
+  }
+  .nav-wrap{
+    max-width:1200px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 32px;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:var(--paper);
+    font-family:'Fraunces', serif;
+    font-size:1.25rem;
+    font-weight:600;
+    text-decoration:none;
+  }
+  .logo svg{width:34px;height:34px;}
+  nav ul{
+    display:flex;
+    gap:34px;
+    list-style:none;
+  }
+  nav a{
+    color:var(--paper);
+    text-decoration:none;
+    font-size:0.92rem;
+    letter-spacing:0.02em;
+    position:relative;
+    opacity:0.88;
+  }
+  nav a:hover{opacity:1;}
+  nav a::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:-6px;
+    height:1px;
+    background:var(--gold);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform 0.25s ease;
+  }
+  nav a:hover::after{transform:scaleX(1);}
+  .nav-cta{
+    border:1px solid var(--gold);
+    color:var(--gold) !important;
+    padding:9px 18px;
+    border-radius:100px;
+    font-size:0.85rem !important;
+  }
+  .nav-cta:hover{background:var(--gold);color:var(--ink-green-deep) !important;}
+  .nav-toggle{display:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--ink-green-deep);
+    color:var(--paper);
+    position:relative;
+    padding:100px 32px 140px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: radial-gradient(rgba(243,233,210,0.05) 1px, transparent 1px);
+    background-size:22px 22px;
+    opacity:0.5;
+  }
+  .hero-inner{
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:60px;
+    align-items:center;
+    position:relative;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 5vw, 4.1rem);
+    line-height:1.04;
+    margin:18px 0 26px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--gold);
+  }
+  .hero p.lede{
+    font-size:1.12rem;
+    max-width:46ch;
+    color:rgba(243,233,210,0.82);
+    margin-bottom:36px;
+  }
+  .btn-row{display:flex;gap:16px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:15px 28px;
+    border-radius:100px;
+    font-size:0.95rem;
+    text-decoration:none;
+    font-family:'Lora', serif;
+    font-weight:600;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn-primary{
+    background:var(--gold);
+    color:var(--ink-green-deep);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(192,145,58,0.35);}
+  .btn-ghost{
+    border:1px solid rgba(243,233,210,0.4);
+    color:var(--paper);
+  }
+  .btn-ghost:hover{border-color:var(--paper);}
+
+  /* Hero certificate card */
+  .cert-card{
+    background:var(--paper);
+    border-radius:6px;
+    padding:34px 30px 28px;
+    box-shadow:var(--shadow);
+    position:relative;
+    transform:rotate(2.5deg);
+    max-width:380px;
+    justify-self:end;
+    border:1px solid var(--paper-dark);
+  }
+  .cert-card::before{
+    content:"";
+    position:absolute;
+    inset:10px;
+    border:1px solid rgba(42,36,28,0.25);
+    pointer-events:none;
+  }
+  .cert-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    font-family:'Special Elite', monospace;
+    font-size:0.68rem;
+    letter-spacing:0.08em;
+    color:var(--ink-green);
+    text-transform:uppercase;
+  }
+  .cert-title{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.6rem;
+    color:var(--ink-green);
+    margin:14px 0 4px;
+  }
+  .cert-name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.9rem;
+    color:var(--charcoal);
+    margin-bottom:14px;
+  }
+  .cert-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:0.82rem;
+    padding:7px 0;
+    border-top:1px dashed var(--line);
+    color:var(--charcoal);
+  }
+  .cert-row span:first-child{color:var(--ink-green);font-family:'Special Elite',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;}
+  .stamp{
+    position:absolute;
+    bottom:-18px;
+    right:-14px;
+    width:96px;
+    height:96px;
+    transform:rotate(-14deg);
+    opacity:0.92;
+  }
+
+  /* ---------- Section shell ---------- */
+  section{padding:110px 32px;}
+  .section-inner{max-width:1200px;margin:0 auto;}
+  .section-head{
+    max-width:640px;
+    margin-bottom:64px;
+  }
+  .section-head h2{
+    font-size:clamp(2rem, 3.4vw, 2.8rem);
+    margin-top:12px;
+    color:var(--ink-green-deep);
+  }
+  .section-head p{color:rgba(42,36,28,0.72);margin-top:16px;font-size:1.04rem;}
+  .light-head h2{color:var(--paper);}
+  .light-head p{color:rgba(243,233,210,0.75);}
+
+  /* ---------- Process ---------- */
+  .process{background:var(--ink-green-deep);color:var(--paper);}
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:rgba(243,233,210,0.16);
+    border:1px solid rgba(243,233,210,0.16);
+  }
+  .step{
+    background:var(--ink-green-deep);
+    padding:38px 28px;
+    position:relative;
+  }
+  .step .num{
+    font-family:'Special Elite', monospace;
+    color:var(--gold);
+    font-size:0.8rem;
+    letter-spacing:0.1em;
+  }
+  .step h3{
+    font-size:1.25rem;
+    margin:14px 0 10px;
+    font-weight:500;
+  }
+  .step p{font-size:0.92rem;color:rgba(243,233,210,0.72);}
+
+  /* ---------- Bear grid ---------- */
+  .bears{background:var(--paper);}
+  .bear-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+  }
+  .bear-card{
+    background:#fff;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 10px 26px rgba(42,36,28,0.08);
+    border:1px solid var(--paper-dark);
+    perspective:1400px;
+    height:430px;
+  }
+  .bear-inner{
+    position:relative;
+    width:100%;
+    height:100%;
+    transition:transform 0.7s cubic-bezier(.4,.2,.2,1);
+    transform-style:preserve-3d;
+  }
+  .bear-card:hover .bear-inner, .bear-card:focus-within .bear-inner{
+    transform:rotateY(180deg);
+  }
+  .bear-face, .bear-back{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .bear-face{
+    background:var(--paper);
+  }
+  .bear-portrait{
+    height:230px;
+    background:linear-gradient(160deg, var(--paper-dark), var(--paper));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .bear-portrait svg{width:120px;height:120px;}
+  .bear-face .body{padding:22px 24px;flex:1;display:flex;flex-direction:column;}
+  .bear-face h3{font-size:1.3rem;color:var(--ink-green-deep);}
+  .bear-face .traits{
+    font-family:'Special Elite', monospace;
+    font-size:0.68rem;
+    color:var(--rose);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin:8px 0 12px;
+  }
+  .bear-face .blurb{font-size:0.9rem;color:rgba(42,36,28,0.75);flex:1;}
+  .bear-face .price-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:16px;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+  }
+  .price{font-family:'Fraunces', serif;font-weight:600;font-size:1.15rem;color:var(--charcoal);}
+  .flip-hint{font-size:0.72rem;color:var(--gold);font-family:'Special Elite',monospace;}
+
+  .bear-back{
+    background:var(--ink-green);
+    color:var(--paper);
+    transform:rotateY(180deg);
+    padding:26px 26px;
+    justify-content:space-between;
+  }
+  .bear-back .cert-top{color:rgba(243,233,210,0.65);}
+  .bear-back .cert-name{color:var(--paper);font-size:1.5rem;}
+  .bear-back .cert-row{border-top:1px dashed rgba(243,233,210,0.25);color:var(--paper);}
+  .bear-back .cert-row span:first-child{color:var(--gold);}
+  .bear-back .adopt-btn{
+    align-self:flex-start;
+    margin-top:14px;
+    background:var(--gold);
+    color:var(--ink-green-deep);
+    border:none;
+    padding:11px 22px;
+    border-radius:100px;
+    font-family:'Lora',serif;
+    font-weight:600;
+    cursor:pointer;
+    font-size:0.88rem;
+  }
+
+  /* ---------- Craft section ---------- */
+  .craft{
+    background:var(--ink-green-deep);
+    color:var(--paper);
+  }
+  .craft-grid{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:70px;
+    align-items:center;
+  }
+  .craft-visual{
+    background:var(--paper);
+    border-radius:8px;
+    padding:40px;
+    box-shadow:var(--shadow);
+  }
+  .materials-list{
+    list-style:none;
+    margin-top:28px;
+  }
+  .materials-list li{
+    display:flex;
+    gap:16px;
+    padding:18px 0;
+    border-top:1px solid rgba(243,233,210,0.15);
+  }
+  .materials-list li:last-child{border-bottom:1px solid rgba(243,233,210,0.15);}
+  .materials-list .m-icon{
+    width:22px;height:22px;flex-shrink:0;color:var(--gold);margin-top:3px;
+  }
+  .materials-list h4{font-weight:500;font-size:1.05rem;margin-bottom:4px;}
+  .materials-list p{font-size:0.9rem;color:rgba(243,233,210,0.68);}
+
+  /* ---------- Testimonials ---------- */
+  .testimonials{background:var(--paper-dark);}
+  .test-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+  }
+  .test-card{
+    background:var(--paper);
+    padding:30px 26px;
+    border-radius:6px;
+    border:1px solid var(--paper-dark);
+    position:relative;
+  }
+  .test-card::before{
+    content:"❝";
+    font-family:'Fraunces',serif;
+    font-size:2.6rem;
+    color:var(--gold);
+    line-height:1;
+    display:block;
+    margin-bottom:6px;
+  }
+  .test-card p.quote{font-size:0.96rem;color:var(--charcoal);margin-bottom:18px;}
+  .test-card .who{font-family:'Special Elite',monospace;font-size:0.72rem;letter-spacing:0.05em;color:var(--ink-green);text-transform:uppercase;}
+
+  /* ---------- Newsletter / footer ---------- */
+  .newsletter{
+    background:var(--ink-green-deep);
+    color:var(--paper);
+    text-align:center;
+    padding:100px 32px;
+    border-top:1px solid rgba(243,233,210,0.12);
+  }
+  .newsletter h2{font-size:clamp(1.9rem,3.4vw,2.6rem);margin-bottom:14px;}
+  .newsletter p{color:rgba(243,233,210,0.72);max-width:50ch;margin:0 auto 30px;}
+  .n-form{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    max-width:440px;
+    margin:0 auto;
+    flex-wrap:wrap;
+  }
+  .n-form input{
+    flex:1;
+    min-width:200px;
+    padding:14px 18px;
+    border-radius:100px;
+    border:1px solid rgba(243,233,210,0.3);
+    background:transparent;
+    color:var(--paper);
+    font-family:'Lora',serif;
+    font-size:0.92rem;
+  }
+  .n-form input::placeholder{color:rgba(243,233,210,0.5);}
+  .n-form input:focus{outline:2px solid var(--gold);outline-offset:2px;}
+
+  footer{
+    background:var(--ink-green-deep);
+    color:rgba(243,233,210,0.55);
+    padding:40px 32px;
+    border-top:1px solid rgba(243,233,210,0.1);
+  }
+  .footer-inner{
+    max-width:1200px;
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+    font-size:0.85rem;
+  }
+  .footer-links{display:flex;gap:24px;list-style:none;}
+  .footer-links a{text-decoration:none;color:inherit;}
+  .footer-links a:hover{color:var(--gold);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px){
+    nav ul{display:none;}
+    .hero-inner{grid-template-columns:1fr;}
+    .cert-card{justify-self:start;transform:rotate(1deg);}
+    .steps{grid-template-columns:1fr 1fr;}
+    .bear-grid{grid-template-columns:1fr 1fr;}
+    .craft-grid{grid-template-columns:1fr;}
+    .test-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width: 560px){
+    .steps{grid-template-columns:1fr;}
+    .bear-grid{grid-template-columns:1fr;}
+    section{padding:80px 22px;}
+    .hero{padding:70px 22px 100px;}
+  }
+
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+</style>
 </head>
 <body>
 
-<header class="site-header" id="top">
-  <div class="wrap nav">
-    <a href="#top" class="brand" aria-label="Adoption Tales Co., back to top">
-      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="13" cy="11" r="7" fill="#D9A441"/><circle cx="35" cy="11" r="7" fill="#D9A441"/><circle cx="24" cy="27" r="17" fill="#F1E7CF"/><circle cx="18" cy="25" r="2.6" fill="#241F18"/><circle cx="30" cy="25" r="2.6" fill="#241F18"/><ellipse cx="24" cy="32" rx="4.5" ry="3" fill="#A8372A"/></svg>
+<header>
+  <div class="nav-wrap">
+    <a href="#" class="logo">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="10" r="6" fill="#C0913A"/>
+        <circle cx="34" cy="10" r="6" fill="#C0913A"/>
+        <circle cx="24" cy="26" r="16" fill="#F3E9D2"/>
+        <circle cx="17" cy="24" r="2.4" fill="#2A241C"/>
+        <circle cx="31" cy="24" r="2.4" fill="#2A241C"/>
+        <ellipse cx="24" cy="31" rx="4" ry="3" fill="#C17A5E"/>
+      </svg>
       Adoption Tales Co.
     </a>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><span></span></button>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#bears">Meet the bears</a></li>
-      <li><a href="#process">How adoption works</a></li>
-      <li><a href="#craft">Our craft</a></li>
-      <li><a href="#stories">Stories</a></li>
-      <li><a href="#care">Care</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#bears" class="btn btn-gold">Adopt a bear</a></li>
-    </ul>
+    <nav>
+      <ul>
+        <li><a href="#bears">Meet the Bears</a></li>
+        <li><a href="#process">Adoption Process</a></li>
+        <li><a href="#craft">Our Craft</a></li>
+        <li><a href="#stories">Stories</a></li>
+        <li><a href="#" class="nav-cta">Adopt Now</a></li>
+      </ul>
+    </nav>
   </div>
 </header>
 
-<main>
-<section class="hero" aria-labelledby="heroTitle">
-  <div class="wrap hero-grid">
+<section class="hero">
+  <div class="hero-inner">
     <div>
-      <h1 id="heroTitle">Every bear has a story. You write the next chapter.</h1>
-      <p class="lead">Each bear is stitched by hand, given a name, a birthday and a small personality of its own, then placed in a real adoption folder to wait for the right family.</p>
-      <div class="hero-actions">
-        <button type="button" class="btn btn-gold" id="heroAdopt" disabled>Adopt a bear</button>
-        <a href="#process" class="btn btn-line">See how it works</a>
-      </div>
-      <p class="hero-note" id="heroCount" aria-live="polite">Loading this season's litter…</p>
-    </div>
-
-    <div class="cert-stage">
-      <div class="cert-field">
-        <label for="heroName">Try it: whose family is adopting?</label>
-        <input id="heroName" type="text" maxlength="30" placeholder="Type your family name" autocomplete="off">
-      </div>
-      <div class="chips" id="heroChips" role="group" aria-label="Choose a bear for the certificate"></div>
-
-      <div class="certificate" id="heroCert" aria-live="polite">
-        <div class="cert-head"><span>Adoption Tales Co.</span><span id="hcNumber">No. ----</span></div>
-        <div class="cert-title">Certificate of Adoption</div>
-        <p class="cert-line">This certifies that</p>
-        <div class="cert-bear" id="hcBear">&nbsp;</div>
-        <p class="cert-line">has been adopted by the family of</p>
-        <div class="cert-sign is-empty" id="hcSign">Your name here</div>
-        <dl class="cert-rows">
-          <div class="cert-row"><dt>Born</dt><dd id="hcBorn">-</dd></div>
-          <div class="cert-row"><dt>Coat</dt><dd id="hcCoat">-</dd></div>
-          <div class="cert-row"><dt>Stitched by</dt><dd id="hcBy">-</dd></div>
-          <div class="cert-row"><dt>Adopted on</dt><dd id="hcDate">-</dd></div>
-        </dl>
-        <svg class="stamp" id="hcStamp" viewBox="0 0 100 100" aria-hidden="true">
-          <circle cx="50" cy="50" r="46" fill="none" stroke="#A8372A" stroke-width="3"/>
-          <circle cx="50" cy="50" r="38" fill="none" stroke="#A8372A" stroke-width="1.4"/>
-          <text x="50" y="48" text-anchor="middle" font-family="Special Elite, monospace" font-size="12" fill="#A8372A">ADOPTED</text>
-          <text x="50" y="62" text-anchor="middle" font-family="Special Elite, monospace" font-size="6.5" fill="#A8372A">HANDMADE &amp; TRUE</text>
-        </svg>
+      <p class="eyebrow">— Handcrafted teddy bears, one at a time —</p>
+      <h1>Every bear<br>has a story. <em>You write<br>the next chapter.</em></h1>
+      <p class="lede">Each bear at Adoption Tales Co. is stitched by hand, given a name, a birthday, and a small personality of its own — then placed into a real adoption folder, waiting for the right family to find them.</p>
+      <div class="btn-row">
+        <a href="#bears" class="btn btn-primary">Meet the bears →</a>
+        <a href="#process" class="btn btn-ghost">How adoption works</a>
       </div>
     </div>
-  </div>
-</section>
 
-<section class="bears" id="bears" aria-labelledby="bearsTitle">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 id="bearsTitle">Bears waiting for a family</h2>
-      <p>Pick a bear to read their certificate and start the adoption. Once a bear is placed, that exact bear won't be made again.</p>
-    </div>
-    <div class="toolbar">
-      <div class="chips" id="filterChips" role="group" aria-label="Filter bears">
-        <button class="chip" type="button" data-filter="available" aria-pressed="true">Waiting</button>
-        <button class="chip" type="button" data-filter="small" aria-pressed="false">Under 10 inches</button>
-        <button class="chip" type="button" data-filter="big" aria-pressed="false">10 inches and up</button>
-        <button class="chip" type="button" data-filter="all" aria-pressed="false">Show adopted too</button>
+    <div class="cert-card">
+      <div class="cert-top">
+        <span>Adoption Tales Co.</span>
+        <span>No. 0148</span>
       </div>
-      <label class="sr-only" for="sortBears">Sort bears</label>
-      <select id="sortBears">
-        <option value="number">Certificate number</option>
-        <option value="price-asc">Price, low to high</option>
-        <option value="price-desc">Price, high to low</option>
-      </select>
-    </div>
-    <div class="bear-grid" id="bearGrid" aria-live="polite">
-      <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
-    </div>
-  </div>
-</section>
-
-<section id="process" aria-labelledby="processTitle">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 id="processTitle">Four steps from workshop to your home</h2>
-      <p>It really is an adoption, not a checkout. The paperwork just happens to be adorable.</p>
-    </div>
-    <ol class="steps">
-      <li class="step"><div class="step-num" aria-hidden="true">1</div><h3>Choose a bear</h3><p>Browse the bears waiting for a family. Each one is one of a kind.</p></li>
-      <li class="step"><div class="step-num" aria-hidden="true">2</div><h3>Read their story</h3><p>Every bear has a short biography: birthday, temperament, and the maker who stitched them.</p></li>
-      <li class="step"><div class="step-num" aria-hidden="true">3</div><h3>Sign the certificate</h3><p>Your family's name is lettered onto their adoption certificate, printed on cotton stock.</p></li>
-      <li class="step"><div class="step-num" aria-hidden="true">4</div><h3>Bring them home</h3><p>Wrapped in tissue inside a keepsake box, your bear arrives ready for a first chapter with you.</p></li>
-    </ol>
-  </div>
-</section>
-
-<section class="craft" id="craft" aria-labelledby="craftTitle">
-  <div class="wrap craft-grid">
-    <div class="pattern">
-      <svg viewBox="0 0 500 440" role="img" aria-label="Pattern diagram of a bear with callouts for the eyes, joints, paw pads, coat and seams">
-        <rect x="6" y="6" width="488" height="428" rx="6" fill="none" stroke="#241F18" stroke-opacity=".25" stroke-dasharray="5 6"/>
-        <g fill="#DFAE5C" stroke="#241F18" stroke-opacity=".55" stroke-width="1.6" stroke-dasharray="6 4">
-          <circle cx="200" cy="72" r="26"/><circle cx="300" cy="72" r="26"/>
-          <ellipse cx="250" cy="290" rx="76" ry="88"/>
-          <ellipse cx="160" cy="270" rx="30" ry="54" transform="rotate(-20 160 270)"/>
-          <ellipse cx="340" cy="270" rx="30" ry="54" transform="rotate(20 340 270)"/>
-          <ellipse cx="200" cy="385" rx="38" ry="34"/><ellipse cx="300" cy="385" rx="38" ry="34"/>
-          <circle cx="250" cy="120" r="62"/>
-        </g>
-        <g fill="#C17A5E" opacity=".55"><circle cx="200" cy="72" r="13"/><circle cx="300" cy="72" r="13"/></g>
-        <ellipse cx="250" cy="142" rx="26" ry="19" fill="#EBD9B4" stroke="#241F18" stroke-opacity=".4" stroke-dasharray="4 3"/>
-        <circle cx="230" cy="112" r="6" fill="#241F18"/><circle cx="270" cy="112" r="6" fill="#241F18"/>
-        <circle cx="232" cy="110" r="1.8" fill="#fff"/><circle cx="272" cy="110" r="1.8" fill="#fff"/>
-        <ellipse cx="250" cy="134" rx="8" ry="5.5" fill="#6E3B2A"/>
-        <path d="M250 140v8M240 152q10 6 20 0" stroke="#6E3B2A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-        <g fill="#C9805F" opacity=".75"><circle cx="200" cy="392" r="15"/><circle cx="300" cy="392" r="15"/></g>
-        <g fill="#fff" stroke="#241F18" stroke-width="1.5"><circle cx="175" cy="232" r="7"/><circle cx="325" cy="232" r="7"/><circle cx="212" cy="358" r="7"/><circle cx="288" cy="358" r="7"/><circle cx="250" cy="186" r="7"/></g>
-        <g stroke="#241F18" stroke-width="1.5" stroke-linecap="round"><path d="M175 228v8M171 232h8M325 228v8M321 232h8M212 354v8M208 358h8M288 354v8M284 358h8M250 182v8M246 186h8"/></g>
-        <g stroke="#8A4F3E" stroke-width="1.3" fill="none"><path d="M124 96L224 110M128 232L168 232M122 398L184 392M404 160L322 212M358 382L324 366"/></g>
-        <g font-family="Figtree, sans-serif" font-size="15" font-weight="600" fill="#241F18">
-          <text x="16" y="100">Glass eyes</text>
-          <text x="16" y="236">Cotter-pin joint</text>
-          <text x="16" y="402">Felt paw pads</text>
-          <text x="484" y="150" text-anchor="end">Mohair and alpaca coat</text>
-          <text x="484" y="384" text-anchor="end">Hand-sewn seams</text>
-        </g>
+      <div class="cert-title">Certificate of Adoption</div>
+      <div class="cert-name">Wilfred T. Bear</div>
+      <div class="cert-row"><span>Born</span><span>Spring, Workshop No. 3</span></div>
+      <div class="cert-row"><span>Coat</span><span>Hand-carded mohair, honey</span></div>
+      <div class="cert-row"><span>Temperament</span><span>Loyal, a little sleepy</span></div>
+      <div class="cert-row"><span>Stitched by</span><span>M. Alvarez</span></div>
+      <svg class="stamp" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="46" fill="none" stroke="#9C3B2E" stroke-width="3" opacity="0.85"/>
+        <circle cx="50" cy="50" r="38" fill="none" stroke="#9C3B2E" stroke-width="1.5" opacity="0.7"/>
+        <text x="50" y="46" text-anchor="middle" font-family="Special Elite, monospace" font-size="9" fill="#9C3B2E" opacity="0.85">ADOPTED</text>
+        <text x="50" y="60" text-anchor="middle" font-family="Special Elite, monospace" font-size="7" fill="#9C3B2E" opacity="0.85">HANDMADE &amp; TRUE</text>
       </svg>
     </div>
-    <div>
-      <h2 id="craftTitle">Nothing about a Tales Co. bear is mass-produced</h2>
-      <p class="lead">Every bear is cut, stuffed and stitched by one of six makers working in small batches, usually no more than a dozen bears a week between them. No two bears from the same pattern come out quite the same.</p>
-      <ul class="materials">
-        <li><h3>Mohair and alpaca coats</h3><p>Sourced from small European mills and hand-carded before cutting.</p></li>
-        <li><h3>Hand-blown glass eyes</h3><p>Made in small batches by a glassworker in Oaxaca.</p></li>
-        <li><h3>Cotter-pin joints</h3><p>Arms, legs and head move and hold a pose. No glued limbs.</p></li>
-        <li><h3>Wool felt paw pads</h3><p>Stitched by hand, one uneven line at a time. That's the point.</p></li>
-      </ul>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="section-inner">
+    <div class="section-head light-head">
+      <p class="eyebrow">The adoption process</p>
+      <h2>Four steps from workshop to your home</h2>
+      <p>Because it really is an adoption, not a checkout — the paperwork just happens to be adorable.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="num">01 / Choose</span>
+        <h3>Meet the litter</h3>
+        <p>Browse the bears currently ready for adoption. Each one is one-of-a-kind — once they're placed, that exact bear won't be made again.</p>
+      </div>
+      <div class="step">
+        <span class="num">02 / Read</span>
+        <h3>Learn their story</h3>
+        <p>Every bear comes with a short biography: their birthday, their temperament, and the maker who stitched them by hand.</p>
+      </div>
+      <div class="step">
+        <span class="num">03 / Sign</span>
+        <h3>Sign the certificate</h3>
+        <p>Add your family's name to their adoption certificate, printed on cotton stock and packed alongside your bear.</p>
+      </div>
+      <div class="step">
+        <span class="num">04 / Welcome</span>
+        <h3>Bear comes home</h3>
+        <p>Wrapped in tissue inside a keepsake box, your bear arrives ready for their first chapter with you.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="stories" aria-labelledby="storiesTitle">
-  <div class="wrap">
+<section class="bears paper-texture" id="bears">
+  <div class="section-inner">
     <div class="section-head">
-      <h2 id="storiesTitle">Stories from bears already home</h2>
+      <p class="eyebrow" style="color:var(--rose);">Currently waiting for a family</p>
+      <h2>Meet the bears</h2>
+      <p>Hover or tap a bear to flip their card and read the adoption certificate on the other side.</p>
     </div>
-    <div class="stories-grid">
-      <figure class="quote quote-lg">
-        <blockquote>We adopted one for my mother after she lost her childhood bear in a move sixty years ago. She cried opening the box.</blockquote>
-        <cite>Adopted family, Austin</cite>
-      </figure>
-      <figure class="quote quote-sm">
-        <blockquote>The certificate made my daughter take it so seriously. She keeps it pinned above her bed next to her own birth certificate.</blockquote>
-        <cite>Adopted family, Marin County</cite>
-      </figure>
-      <figure class="quote quote-sm">
-        <blockquote>You can tell someone's hands actually made this. The stitching isn't perfect, and that's exactly why it feels real.</blockquote>
-        <cite>Adopted family, Leeds</cite>
-      </figure>
+
+    <div class="bear-grid">
+
+      <div class="bear-card" tabindex="0">
+        <div class="bear-inner">
+          <div class="bear-face">
+            <div class="bear-portrait">
+              <svg viewBox="0 0 120 120"><circle cx="34" cy="20" r="15" fill="#C0913A"/><circle cx="86" cy="20" r="15" fill="#C0913A"/><circle cx="60" cy="62" r="42" fill="#DFAE5C"/><circle cx="46" cy="56" r="6" fill="#2A241C"/><circle cx="74" cy="56" r="6" fill="#2A241C"/><ellipse cx="60" cy="74" rx="10" ry="7" fill="#7A4B33"/></svg>
+            </div>
+            <div class="body">
+              <h3>Marigold</h3>
+              <p class="traits">Curious · Chatty · Left-pawed</p>
+              <p class="blurb">Marigold was the first bear made from this season's honey-gold mohair. She hums when she's happy, or so the workshop says.</p>
+              <div class="price-row">
+                <span class="price">$68</span>
+                <span class="flip-hint">tap to view certificate ↻</span>
+              </div>
+            </div>
+          </div>
+          <div class="bear-back">
+            <div>
+              <div class="cert-top"><span>Adoption Tales Co.</span><span>No. 0155</span></div>
+              <div class="cert-name">Marigold</div>
+              <div class="cert-row"><span>Coat</span><span>Honey mohair</span></div>
+              <div class="cert-row"><span>Height</span><span>11 inches</span></div>
+              <div class="cert-row"><span>Eyes</span><span>Hand-blown glass</span></div>
+            </div>
+            <button class="adopt-btn">Adopt Marigold</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bear-card" tabindex="0">
+        <div class="bear-inner">
+          <div class="bear-face">
+            <div class="bear-portrait">
+              <svg viewBox="0 0 120 120"><circle cx="34" cy="20" r="15" fill="#7C8B6F"/><circle cx="86" cy="20" r="15" fill="#7C8B6F"/><circle cx="60" cy="62" r="42" fill="#9DAB8C"/><circle cx="46" cy="56" r="6" fill="#2A241C"/><circle cx="74" cy="56" r="6" fill="#2A241C"/><ellipse cx="60" cy="74" rx="10" ry="7" fill="#5B6650"/></svg>
+            </div>
+            <div class="body">
+              <h3>Thistle</h3>
+              <p class="traits">Quiet · Brave · Slightly lopsided ear</p>
+              <p class="blurb">Thistle's sage-green wool felt was hand-dyed with yarrow leaves. He's stitched a touch crooked on purpose — his maker liked him that way.</p>
+              <div class="price-row">
+                <span class="price">$74</span>
+                <span class="flip-hint">tap to view certificate ↻</span>
+              </div>
+            </div>
+          </div>
+          <div class="bear-back">
+            <div>
+              <div class="cert-top"><span>Adoption Tales Co.</span><span>No. 0161</span></div>
+              <div class="cert-name">Thistle</div>
+              <div class="cert-row"><span>Coat</span><span>Yarrow-dyed felt</span></div>
+              <div class="cert-row"><span>Height</span><span>9.5 inches</span></div>
+              <div class="cert-row"><span>Eyes</span><span>Hand-blown glass</span></div>
+            </div>
+            <button class="adopt-btn">Adopt Thistle</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bear-card" tabindex="0">
+        <div class="bear-inner">
+          <div class="bear-face">
+            <div class="bear-portrait">
+              <svg viewBox="0 0 120 120"><circle cx="34" cy="20" r="15" fill="#B5654E"/><circle cx="86" cy="20" r="15" fill="#B5654E"/><circle cx="60" cy="62" r="42" fill="#C9805F"/><circle cx="46" cy="56" r="6" fill="#2A241C"/><circle cx="74" cy="56" r="6" fill="#2A241C"/><ellipse cx="60" cy="74" rx="10" ry="7" fill="#6E3B2A"/></svg>
+            </div>
+            <div class="body">
+              <h3>Bramble</h3>
+              <p class="traits">Stubborn · Warm · Collects buttons</p>
+              <p class="blurb">Bramble came out a little larger than planned, and the workshop let him stay that way. He's the sturdiest bear in this season's litter.</p>
+              <div class="price-row">
+                <span class="price">$82</span>
+                <span class="flip-hint">tap to view certificate ↻</span>
+              </div>
+            </div>
+          </div>
+          <div class="bear-back">
+            <div>
+              <div class="cert-top"><span>Adoption Tales Co.</span><span>No. 0163</span></div>
+              <div class="cert-name">Bramble</div>
+              <div class="cert-row"><span>Coat</span><span>Rust alpaca blend</span></div>
+              <div class="cert-row"><span>Height</span><span>13 inches</span></div>
+              <div class="cert-row"><span>Eyes</span><span>Hand-blown glass</span></div>
+            </div>
+            <button class="adopt-btn">Adopt Bramble</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<section class="care" id="care" aria-labelledby="careTitle">
-  <div class="wrap two-col">
-    <div>
-      <div class="section-head" style="margin-bottom:34px">
-        <h2 id="careTitle">Caring for your bear</h2>
-        <p>A little attention keeps a handmade bear soft for decades.</p>
+<section class="craft" id="craft">
+  <div class="section-inner">
+    <div class="craft-grid">
+      <div class="craft-visual">
+        <svg viewBox="0 0 300 300" width="100%">
+          <rect x="20" y="20" width="260" height="260" fill="none" stroke="#233826" stroke-width="1" stroke-dasharray="4 5" opacity="0.4"/>
+          <circle cx="150" cy="120" r="70" fill="#DFAE5C"/>
+          <circle cx="105" cy="65" r="26" fill="#DFAE5C"/>
+          <circle cx="195" cy="65" r="26" fill="#DFAE5C"/>
+          <circle cx="130" cy="112" r="7" fill="#2A241C"/>
+          <circle cx="170" cy="112" r="7" fill="#2A241C"/>
+          <ellipse cx="150" cy="138" rx="16" ry="11" fill="#7A4B33"/>
+          <path d="M110 165 Q150 195 190 165" stroke="#2A241C" stroke-width="2" fill="none" opacity="0.6"/>
+          <line x1="60" y1="230" x2="240" y2="230" stroke="#233826" stroke-width="1" opacity="0.3"/>
+          <line x1="60" y1="230" x2="70" y2="245" stroke="#233826" stroke-width="1" opacity="0.3"/>
+          <line x1="240" y1="230" x2="230" y2="245" stroke="#233826" stroke-width="1" opacity="0.3"/>
+        </svg>
       </div>
-      <ul class="care-list">
-        <li><h3>Spot clean only</h3><p>Dab with a damp cloth and a drop of mild soap. Don't machine wash or soak.</p></li>
-        <li><h3>Air dry away from heat</h3><p>Pat dry with a towel and leave it to dry in the open air, not on a radiator.</p></li>
-        <li><h3>Brush with the fibres</h3><p>A soft brush, moving the way the mohair lies, keeps the coat full.</p></li>
-        <li><h3>Keep out of long sun</h3><p>Hand-dyed wools stay rich when they aren't left on a sunny windowsill all summer.</p></li>
-      </ul>
-    </div>
-    <div>
-      <div class="section-head" style="margin-bottom:34px">
-        <h2>Questions about adopting</h2>
-      </div>
-      <div class="faq-list">
-        <details><summary>What name goes on the certificate?</summary><p>Whatever family name you enter on the adoption form. You can also add a short gift message if the bear is for someone else.</p></details>
-        <details><summary>How do I pay?</summary><p>You pay by card at the end of the adoption form. If card payment isn't available, we email you an invoice and keep your bear reserved.</p></details>
-        <details><summary>When will my bear arrive?</summary><p>Every bear is packed by hand. We email you as soon as yours is on its way.</p></details>
-        <details><summary>Is each bear really one of a kind?</summary><p>Yes. Bears are made in small batches and never repeated exactly, so the bear you pick is the one you receive.</p></details>
-        <details><summary>Can I adopt a bear as a gift?</summary><p>Yes. Enter the name of the family receiving the bear and add your gift message in the form.</p></details>
+      <div>
+        <p class="eyebrow">In the workshop</p>
+        <h2 style="color:var(--paper);font-size:clamp(1.9rem,3vw,2.5rem);margin:12px 0 20px;">Nothing about a Tales Co. bear is mass-produced</h2>
+        <p style="color:rgba(243,233,210,0.75);max-width:52ch;">Every bear is cut, stuffed, and stitched by one of six makers working in small batches — usually no more than a dozen bears a week between them. Seams are hand-sewn, joints are cotter-pinned so limbs actually move, and no two bears from the same pattern come out quite the same.</p>
+
+        <ul class="materials-list">
+          <li>
+            <svg class="m-icon" viewBox="0 0 24 24" fill="none"><path d="M4 12c0-4 3-8 8-8s8 4 8 8-3 8-8 8-8-4-8-8Z" stroke="currentColor" stroke-width="1.6"/></svg>
+            <div><h4>Mohair &amp; alpaca coats</h4><p>Sourced from small European mills, hand-carded before cutting.</p></div>
+          </li>
+          <li>
+            <svg class="m-icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>
+            <div><h4>Hand-blown glass eyes</h4><p>Made in small batches by a glassworker in Oaxaca.</p></div>
+          </li>
+          <li>
+            <svg class="m-icon" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6"/></svg>
+            <div><h4>Cotter-pin joints</h4><p>Arms, legs, and head move and hold a pose — no glued limbs.</p></div>
+          </li>
+          <li>
+            <svg class="m-icon" viewBox="0 0 24 24" fill="none"><path d="M4 20V10l8-6 8 6v10" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            <div><h4>Wool felt paw pads</h4><p>Hand-stitched, one uneven line at a time — that's the point.</p></div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section id="contact" aria-labelledby="contactTitle">
-  <div class="wrap contact-wrap">
-    <div>
-      <h2 id="contactTitle" style="font-size:clamp(2.1rem,3.6vw,3.1rem);color:var(--paper);margin-bottom:16px">Talk to the workshop</h2>
-      <p class="lead">Questions about a bear, an order, or a repair? Send a note and we'll reply by email.</p>
+<section class="testimonials" id="stories">
+  <div class="section-inner">
+    <div class="section-head">
+      <p class="eyebrow" style="color:var(--rose);">From adoptive families</p>
+      <h2>Stories from bears already home</h2>
     </div>
-    <form id="contactForm" class="form-grid" novalidate>
-      <div class="field"><label for="cName">Your name</label><input id="cName" name="name" type="text" autocomplete="name" maxlength="100"><span class="err" data-err="name"></span></div>
-      <div class="field"><label for="cEmail">Email</label><input id="cEmail" name="email" type="email" autocomplete="email" maxlength="200"><span class="err" data-err="email"></span></div>
-      <div class="field"><label for="cMsg">Message</label><textarea id="cMsg" name="message" maxlength="2000"></textarea><span class="err" data-err="message"></span></div>
-      <div class="hp" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div>
-      <div><button class="btn btn-gold" type="submit">Send message</button></div>
-      <p class="form-status" role="status" aria-live="polite"></p>
-    </form>
+    <div class="test-grid">
+      <div class="test-card">
+        <p class="quote">The certificate made my daughter take it so seriously — she keeps it pinned above her bed next to her own birth certificate.</p>
+        <p class="who">— Adopted family, Marin County</p>
+      </div>
+      <div class="test-card">
+        <p class="quote">You can tell someone's hands actually made this. The stitching isn't perfect and that's exactly why it feels real.</p>
+        <p class="who">— Adopted family, Leeds</p>
+      </div>
+      <div class="test-card">
+        <p class="quote">We adopted one for my mother after she lost her childhood bear in a move sixty years ago. She cried opening the box.</p>
+        <p class="who">— Adopted family, Austin</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="newsletter" id="news" aria-labelledby="newsTitle">
-  <div class="wrap">
-    <h2 id="newsTitle">Be first to meet the next litter</h2>
-    <p class="lead">A small batch of bears is released every few months. Join the list and get first pick before they're posted publicly.</p>
-    <form class="n-form" id="newsForm" novalidate>
-      <label class="sr-only" for="nEmail">Email address</label>
-      <input id="nEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
-      <div class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
-      <button class="btn btn-gold" type="submit">Join the list</button>
-    </form>
-    <p class="form-status" id="newsStatus" role="status" aria-live="polite"></p>
-  </div>
+<section class="newsletter">
+  <p class="eyebrow">New litters, twice a season</p>
+  <h2>Be first to meet the next litter</h2>
+  <p>We release a small batch of bears every few months. Join the list and you'll get first pick before they're posted publicly.</p>
+  <form class="n-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='You\'re on the list';">
+    <input type="email" placeholder="your@email.com" required aria-label="Email address">
+    <button type="submit" class="btn btn-primary">Join</button>
+  </form>
 </section>
-</main>
 
 <footer>
-  <div class="wrap foot">
-    <span>© 2026 Adoption Tales Co. Handmade in small batches.</span>
-    <ul>
-      <li><a href="#bears">Meet the bears</a></li>
-      <li><a href="#craft">Our craft</a></li>
-      <li><a href="#care">Care instructions</a></li>
-      <li><a href="#contact">Contact</a></li>
+  <div class="footer-inner">
+    <span>© 2026 Adoption Tales Co. — handmade in small batches.</span>
+    <ul class="footer-links">
+      <li><a href="#bears">Meet the Bears</a></li>
+      <li><a href="#craft">Our Craft</a></li>
+      <li><a href="#">Care Instructions</a></li>
+      <li><a href="#">Contact</a></li>
     </ul>
   </div>
 </footer>
 
-<dialog id="adoptDialog" aria-labelledby="adoptTitle">
-  <div class="modal-wrap" id="modalWrap"><div class="modal" id="modal"></div></div>
-</dialog>
-
-<script src="/js/app.js" defer></script>
 </body>
-</html>
 </html>
