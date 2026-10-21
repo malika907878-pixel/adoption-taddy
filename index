@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adoption Tales Co. | Handcrafted Teddy Bears with Adoption Certificates</title>
+<meta name="description" content="Handcrafted teddy bears, stitched one at a time. Each bear has a name, a birthday and a personality, and comes with an adoption certificate in your family's name.">
+<meta name="theme-color" content="#0E1B15">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='13' cy='11' r='7' fill='%23D9A441'/%3E%3Ccircle cx='35' cy='11' r='7' fill='%23D9A441'/%3E%3Ccircle cx='24' cy='27' r='17' fill='%23F1E7CF'/%3E%3Ccircle cx='18' cy='25' r='2.6' fill='%23241F18'/%3E%3Ccircle cx='30' cy='25' r='2.6' fill='%23241F18'/%3E%3Cellipse cx='24' cy='32' rx='4.5' ry='3' fill='%23A8372A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Figtree:wght@400;500;600;700&family=Gloock&family=IM+Fell+English:ital@0;1&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest-950:#0E1B15;--forest-900:#14261D;--forest-800:#1D372A;--moss:#34594A;
+  --paper:#F1E7CF;--paper-2:#E4D5B0;--ink:#241F18;--mohair:#D9A441;--mohair-dark:#A87A22;
+  --stamp:#A8372A;--sky:#8FA6B8;
+  --on-dark:rgba(241,231,207,.88);--on-dark-soft:rgba(241,231,207,.66);
+  --line-dark:rgba(241,231,207,.16);--line-paper:rgba(36,31,24,.2);--radius:14px;
+  --display:'Gloock',Georgia,serif;
+  --body:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --print:'IM Fell English',Georgia,serif;
+  --typed:'Special Elite','Courier New',monospace;
+  --hand:'Caveat','Comic Sans MS',cursive;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--forest-950);color:var(--on-dark);font-family:var(--body);line-height:1.65;font-size:1.0625rem;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+button,input,textarea,select{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.1;letter-spacing:-.005em}
+:focus-visible{outline:3px solid var(--mohair);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+section{padding:110px 0}
+.lead{font-size:1.15rem;color:var(--on-dark-soft);max-width:56ch}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+.btn{background:transparent;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 26px;border-radius:100px;border:1.5px solid transparent;font-weight:700;font-size:1rem;text-decoration:none;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease}
+.btn:active{transform:translateY(1px)}
+.btn-gold{background:var(--mohair);color:var(--forest-950)}
+.btn-gold:hover{background:#E6B455;box-shadow:0 10px 26px rgba(217,164,65,.28);transform:translateY(-2px)}
+.btn-line{border-color:rgba(241,231,207,.42);color:var(--paper)}
+.btn-line:hover{border-color:var(--paper);background:rgba(241,231,207,.06)}
+.btn[disabled]{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
+
+.site-header{position:sticky;top:0;z-index:50;background:rgba(14,27,21,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-dark)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-family:var(--display);font-size:1.3rem;color:var(--paper)}
+.brand svg{width:36px;height:36px}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+.nav-links a{text-decoration:none;font-size:.95rem;font-weight:500;color:var(--on-dark);position:relative;padding:6px 0}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--mohair);transform:scaleX(0);transform-origin:left;transition:transform .22s ease}
+.nav-links a:not(.btn):hover::after{transform:scaleX(1)}
+.nav-links .btn{min-height:42px;padding:8px 20px;font-size:.92rem;color:var(--forest-950)}
+.nav-toggle{display:none;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line-dark);background:none;cursor:pointer;align-items:center;justify-content:center}
+.nav-toggle span,.nav-toggle span::before,.nav-toggle span::after{display:block;width:20px;height:2px;background:var(--paper);position:relative;transition:transform .2s ease,background .2s ease}
+.nav-toggle span::before,.nav-toggle span::after{content:"";position:absolute;left:0}
+.nav-toggle span::before{top:-6px}
+.nav-toggle span::after{top:6px}
+.nav-open .nav-toggle span{background:transparent}
+.nav-open .nav-toggle span::before{top:0;transform:rotate(45deg)}
+.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
+
+.hero{padding:76px 0 120px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 85% 40%,rgba(52,89,74,.55),transparent 70%),radial-gradient(circle at 10% 90%,rgba(217,164,65,.08),transparent 40%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:64px;align-items:center;position:relative}
+.hero h1{font-size:clamp(2.7rem,5.3vw,4.5rem);color:var(--paper);margin-bottom:26px}
+.hero .lead{margin-bottom:34px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.hero-note{margin-top:22px;font-size:.95rem;color:var(--on-dark-soft)}
+
+.cert-stage{position:relative;justify-self:end;width:100%;max-width:460px}
+.cert-field{display:block;margin-bottom:18px}
+.cert-field label{display:block;font-weight:600;font-size:.95rem;margin-bottom:8px;color:var(--paper)}
+.cert-field input{width:100%;min-height:52px;padding:12px 18px;border-radius:12px;border:1.5px solid rgba(241,231,207,.32);background:rgba(241,231,207,.07);font-size:1.05rem;transition:border-color .2s,background .2s}
+.cert-field input::placeholder{color:rgba(241,231,207,.45)}
+.cert-field input:focus{outline:none;border-color:var(--mohair);background:rgba(241,231,207,.11)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.chip{min-height:40px;padding:6px 16px;border-radius:100px;border:1.5px solid rgba(241,231,207,.3);background:none;cursor:pointer;font-weight:600;font-size:.92rem;color:var(--on-dark);transition:all .18s ease}
+.chip:hover{border-color:var(--paper)}
+.chip[aria-pressed="true"]{background:var(--paper);color:var(--forest-950);border-color:var(--paper)}
+
+.certificate{position:relative;background:var(--paper);color:var(--ink);border-radius:6px;padding:34px 34px 30px;box-shadow:0 30px 60px rgba(0,0,0,.45),0 2px 0 rgba(255,255,255,.4) inset;transform:rotate(-1.6deg);background-image:radial-gradient(circle at 15% 15%,rgba(36,31,24,.05),transparent 45%),radial-gradient(circle at 85% 80%,rgba(168,122,34,.07),transparent 50%)}
+.certificate::before{content:"";position:absolute;inset:11px;border:1.5px solid rgba(36,31,24,.35);pointer-events:none}
+.certificate::after{content:"";position:absolute;inset:16px;border:1px solid rgba(36,31,24,.18);pointer-events:none}
+.cert-head{display:flex;justify-content:space-between;font-family:var(--typed);font-size:.78rem;color:#4b4235;letter-spacing:.03em}
+.cert-title{font-family:var(--print);font-style:italic;font-size:1.75rem;text-align:center;margin:20px 0 4px;color:#1d3a2b}
+.cert-line{font-family:var(--print);text-align:center;font-size:.95rem;color:#4b4235}
+.cert-bear{font-family:var(--display);font-size:2.3rem;text-align:center;line-height:1.1;margin:6px 0 10px;color:var(--ink)}
+.cert-sign{font-family:var(--hand);font-size:2.4rem;text-align:center;color:#1e3f7a;min-height:58px;line-height:1.2;margin:2px 0 0;border-bottom:1.5px dotted rgba(36,31,24,.4);padding-bottom:2px;transition:opacity .2s}
+.cert-sign.is-empty{color:rgba(36,31,24,.28)}
+.cert-rows{margin-top:16px}
+.cert-row{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-top:1px dashed var(--line-paper);font-size:.9rem}
+.cert-row dt{font-family:var(--typed);font-size:.78rem;color:#6a5d4a}
+.cert-row dd{text-align:right}
+.stamp{position:absolute;right:12px;bottom:-46px;width:112px;height:112px;opacity:0;transform:rotate(-20deg) scale(1.9);pointer-events:none}
+.stamp.is-down{animation:stamp-down .45s cubic-bezier(.2,.9,.3,1.2) forwards}
+@keyframes stamp-down{0%{opacity:0;transform:rotate(-20deg) scale(1.9)}60%{opacity:.95;transform:rotate(-14deg) scale(.94)}100%{opacity:.9;transform:rotate(-14deg) scale(1)}}
+
+.section-head{max-width:680px;margin-bottom:56px}
+.section-head h2{font-size:clamp(2.1rem,3.6vw,3.1rem);color:var(--paper)}
+.section-head p{margin-top:16px;color:var(--on-dark-soft);font-size:1.1rem}
+
+.bears{background:var(--forest-900);border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:34px}
+.toolbar .chips{margin:0}
+.toolbar select{min-height:44px;padding:8px 40px 8px 16px;border-radius:100px;border:1.5px solid rgba(241,231,207,.3);background:var(--forest-900) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23F1E7CF' stroke-width='2'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 16px center;appearance:none;cursor:pointer}
+.bear-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.bear-card{position:relative;background:var(--paper);color:var(--ink);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .25s ease,box-shadow .25s ease;border:0;text-align:left;cursor:pointer;width:100%}
+.bear-card:hover{transform:translateY(-6px);box-shadow:0 24px 44px rgba(0,0,0,.4)}
+.bear-card .tag{position:absolute;top:16px;left:16px;font-family:var(--typed);font-size:.78rem;background:rgba(255,255,255,.55);padding:3px 10px;border-radius:100px;color:#4b4235}
+.portrait{height:232px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.55),transparent 62%),var(--paper-2)}
+.portrait svg{width:168px;height:168px;transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.bear-card:hover .portrait svg{transform:rotate(-4deg) scale(1.05)}
+.bear-body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
+.bear-body h3{font-size:1.65rem;color:var(--forest-900)}
+.bear-traits{font-weight:600;color:#8a4f3e;font-size:.92rem;margin:4px 0 10px}
+.bear-blurb{font-size:.97rem;color:#4b4235;flex:1}
+.bear-foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:16px;border-top:1px solid var(--line-paper)}
+.price{font-family:var(--display);font-size:1.45rem;color:var(--ink)}
+.bear-cta{font-weight:700;font-size:.95rem;color:var(--forest-900);border-bottom:2px solid var(--mohair);padding-bottom:1px}
+.bear-card.is-gone{cursor:default}
+.bear-card.is-gone:hover{transform:none;box-shadow:none}
+.bear-card.is-gone .portrait,.bear-card.is-gone .bear-body{opacity:.5}
+.gone-stamp{position:absolute;top:70px;left:50%;width:150px;transform:translateX(-50%) rotate(-14deg);opacity:.9}
+.state-msg{grid-column:1/-1;text-align:center;padding:56px 20px;border:1.5px dashed var(--line-dark);border-radius:var(--radius);color:var(--on-dark-soft)}
+.state-msg .btn{margin-top:16px}
+
+.steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.steps::before{content:"";position:absolute;left:0;right:0;top:27px;border-top:2px dashed rgba(217,164,65,.5)}
+.step{position:relative;padding:0 26px 0 0}
+.step-num{width:56px;height:56px;border-radius:50%;background:var(--forest-950);border:2px solid var(--mohair);color:var(--mohair);display:grid;place-items:center;font-family:var(--display);font-size:1.4rem;position:relative;margin-bottom:22px}
+.step h3{font-size:1.4rem;color:var(--paper);margin-bottom:10px}
+.step p{font-size:.98rem;color:var(--on-dark-soft)}
+
+.craft{background:var(--forest-900);border-top:1px solid var(--line-dark)}
+.craft-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:72px;align-items:center}
+.pattern{background:var(--paper);border-radius:var(--radius);padding:28px;box-shadow:0 24px 50px rgba(0,0,0,.35)}
+.pattern svg{width:100%;height:auto}
+.craft h2{font-size:clamp(2rem,3.4vw,2.9rem);color:var(--paper);margin-bottom:20px}
+.materials{margin-top:30px;list-style:none}
+.materials li{padding:18px 0;border-top:1px solid var(--line-dark)}
+.materials li:last-child{border-bottom:1px solid var(--line-dark)}
+.materials h3{font-family:var(--body);font-weight:700;font-size:1.08rem;color:var(--paper);margin-bottom:3px}
+.materials p{font-size:.97rem;color:var(--on-dark-soft)}
+
+.stories-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:start}
+.quote{margin:0}
+.quote blockquote{font-family:var(--display);color:var(--paper);line-height:1.3}
+.quote cite{display:block;margin-top:14px;font-style:normal;color:var(--mohair);font-weight:600;font-size:.95rem}
+.quote-lg{grid-row:span 2;padding:44px 40px;background:var(--forest-800);border-radius:var(--radius);border-left:5px solid var(--mohair)}
+.quote-lg blockquote{font-size:clamp(1.55rem,2.4vw,2.1rem)}
+.quote-sm{padding:28px 30px;border:1.5px solid var(--line-dark);border-radius:var(--radius)}
+.quote-sm blockquote{font-size:1.2rem}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:72px}
+.faq-list details{border-top:1px solid var(--line-dark);padding:18px 0}
+.faq-list details:last-child{border-bottom:1px solid var(--line-dark)}
+.faq-list summary{cursor:pointer;font-weight:700;font-size:1.06rem;color:var(--paper);list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary::after{content:"+";color:var(--mohair);font-size:1.5rem;line-height:1;transition:transform .2s}
+.faq-list details[open] summary::after{transform:rotate(45deg)}
+.faq-list p{margin-top:12px;color:var(--on-dark-soft);max-width:60ch}
+.care{background:var(--forest-900);border-top:1px solid var(--line-dark)}
+.care-list{list-style:none;display:grid;gap:0}
+.care-list li{padding:20px 0;border-top:1px solid var(--line-dark)}
+.care-list li:last-child{border-bottom:1px solid var(--line-dark)}
+.care-list h3{font-family:var(--body);font-weight:700;font-size:1.08rem;color:var(--paper);margin-bottom:4px}
+.care-list p{color:var(--on-dark-soft);font-size:.98rem}
+
+.form-grid{display:grid;gap:16px}
+.field label{display:block;font-weight:600;font-size:.93rem;margin-bottom:6px}
+.field .opt{font-weight:400;opacity:.65}
+.field input,.field textarea{width:100%;min-height:50px;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(241,231,207,.3);background:rgba(241,231,207,.06);transition:border-color .2s,background .2s}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--mohair);background:rgba(241,231,207,.1)}
+.field input[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:#E8907F}
+.field .err{display:block;margin-top:6px;font-size:.88rem;color:#F0A294}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-status{min-height:1.4em;font-weight:600;font-size:.97rem}
+.form-status.ok{color:#9FD6A8}
+.form-status.bad{color:#F0A294}
+
+.contact-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:72px;align-items:start}
+.newsletter{text-align:center;background:var(--forest-900);border-top:1px solid var(--line-dark)}
+.newsletter h2{font-size:clamp(2rem,3.4vw,2.8rem);color:var(--paper);margin-bottom:14px}
+.newsletter .lead{margin:0 auto 28px}
+.n-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:520px;margin:0 auto}
+.n-form input[type=email]{flex:1;min-width:220px;min-height:50px;padding:12px 20px;border-radius:100px;border:1.5px solid rgba(241,231,207,.3);background:rgba(241,231,207,.06)}
+.n-form input:focus{outline:none;border-color:var(--mohair)}
+.newsletter .form-status{margin-top:14px}
+
+footer{padding:36px 0;border-top:1px solid var(--line-dark);font-size:.93rem;color:var(--on-dark-soft)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.foot ul{display:flex;gap:24px;list-style:none;flex-wrap:wrap}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--mohair)}
+
+dialog{color:var(--on-dark);border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100%;height:100%;overflow:auto}
+dialog::backdrop{background:rgba(6,12,9,.78);backdrop-filter:blur(4px)}
+.modal-wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:28px 16px}
+.modal{position:relative;width:100%;max-width:960px;background:var(--forest-900);border:1px solid var(--line-dark);border-radius:20px;padding:36px;display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;box-shadow:0 40px 90px rgba(0,0,0,.6);animation:pop .28s ease}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.modal-close{position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line-dark);background:none;cursor:pointer;font-size:1.4rem;line-height:1;color:var(--paper)}
+.modal-close:hover{border-color:var(--paper)}
+.modal .certificate{transform:rotate(-1deg);padding:26px 26px 24px}
+.modal .cert-bear{font-size:1.9rem}
+.modal .cert-sign{font-size:2rem;min-height:48px}
+.modal-side{display:flex;flex-direction:column;gap:22px;justify-content:center}
+.modal-side .portrait-sm{display:flex;align-items:center;gap:16px}
+.modal-side .portrait-sm svg{width:84px;height:84px;flex:none}
+.modal h2{font-size:2rem;color:var(--paper)}
+.modal .sub{color:var(--on-dark-soft);font-size:.97rem}
+.total{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--line-dark);font-weight:600}
+.total strong{font-family:var(--display);font-size:1.7rem;font-weight:400;color:var(--mohair)}
+.success{grid-column:1/-1;text-align:center;padding:30px 10px 10px}
+.success .stamp-big{width:150px;margin:0 auto 16px;animation:stamp-down .5s cubic-bezier(.2,.9,.3,1.2) both}
+.success h2{margin-bottom:12px}
+.success p{color:var(--on-dark-soft);max-width:52ch;margin:0 auto 10px}
+.success .ref{font-family:var(--typed);color:var(--mohair);margin:12px 0 24px}
+
+@media (max-width:960px){
+  section{padding:84px 0}
+  .hero-grid,.craft-grid,.two-col,.contact-wrap,.stories-grid{grid-template-columns:1fr;gap:48px}
+  .cert-stage{justify-self:center}
+  .bear-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr;row-gap:40px}
+  .steps::before{display:none}
+  .quote-lg{grid-row:auto}
+  .modal{grid-template-columns:1fr;padding:28px 22px;gap:28px}
+  .nav-toggle{display:flex}
+  .nav-links{position:absolute;top:72px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--forest-950);border-bottom:1px solid var(--line-dark);padding:8px 28px 22px;display:none}
+  .nav-open .nav-links{display:flex}
+  .nav-links li{border-top:1px solid var(--line-dark)}
+  .nav-links li:first-child{border-top:0}
+  .nav-links a{display:block;padding:14px 0}
+  .nav-links .btn{margin-top:14px;display:flex}
+}
+@media (max-width:600px){
+  .wrap{padding:0 20px}
+  section{padding:68px 0}
+  .hero{padding:44px 0 80px}
+  .bear-grid,.steps{grid-template-columns:1fr}
+  .certificate{padding:28px 24px 26px}
+  .cert-bear{font-size:2rem}
+  .quote-lg{padding:30px 24px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="Adoption Tales Co., back to top">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="13" cy="11" r="7" fill="#D9A441"/><circle cx="35" cy="11" r="7" fill="#D9A441"/><circle cx="24" cy="27" r="17" fill="#F1E7CF"/><circle cx="18" cy="25" r="2.6" fill="#241F18"/><circle cx="30" cy="25" r="2.6" fill="#241F18"/><ellipse cx="24" cy="32" rx="4.5" ry="3" fill="#A8372A"/></svg>
+      Adoption Tales Co.
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#bears">Meet the bears</a></li>
+      <li><a href="#process">How adoption works</a></li>
+      <li><a href="#craft">Our craft</a></li>
+      <li><a href="#stories">Stories</a></li>
+      <li><a href="#care">Care</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#bears" class="btn btn-gold">Adopt a bear</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="wrap hero-grid">
+    <div>
+      <h1 id="heroTitle">Every bear has a story. You write the next chapter.</h1>
+      <p class="lead">Each bear is stitched by hand, given a name, a birthday and a small personality of its own, then placed in a real adoption folder to wait for the right family.</p>
+      <div class="hero-actions">
+        <button type="button" class="btn btn-gold" id="heroAdopt" disabled>Adopt a bear</button>
+        <a href="#process" class="btn btn-line">See how it works</a>
+      </div>
+      <p class="hero-note" id="heroCount" aria-live="polite">Loading this season's litter…</p>
+    </div>
+
+    <div class="cert-stage">
+      <div class="cert-field">
+        <label for="heroName">Try it: whose family is adopting?</label>
+        <input id="heroName" type="text" maxlength="30" placeholder="Type your family name" autocomplete="off">
+      </div>
+      <div class="chips" id="heroChips" role="group" aria-label="Choose a bear for the certificate"></div>
+
+      <div class="certificate" id="heroCert" aria-live="polite">
+        <div class="cert-head"><span>Adoption Tales Co.</span><span id="hcNumber">No. ----</span></div>
+        <div class="cert-title">Certificate of Adoption</div>
+        <p class="cert-line">This certifies that</p>
+        <div class="cert-bear" id="hcBear">&nbsp;</div>
+        <p class="cert-line">has been adopted by the family of</p>
+        <div class="cert-sign is-empty" id="hcSign">Your name here</div>
+        <dl class="cert-rows">
+          <div class="cert-row"><dt>Born</dt><dd id="hcBorn">-</dd></div>
+          <div class="cert-row"><dt>Coat</dt><dd id="hcCoat">-</dd></div>
+          <div class="cert-row"><dt>Stitched by</dt><dd id="hcBy">-</dd></div>
+          <div class="cert-row"><dt>Adopted on</dt><dd id="hcDate">-</dd></div>
+        </dl>
+        <svg class="stamp" id="hcStamp" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="46" fill="none" stroke="#A8372A" stroke-width="3"/>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#A8372A" stroke-width="1.4"/>
+          <text x="50" y="48" text-anchor="middle" font-family="Special Elite, monospace" font-size="12" fill="#A8372A">ADOPTED</text>
+          <text x="50" y="62" text-anchor="middle" font-family="Special Elite, monospace" font-size="6.5" fill="#A8372A">HANDMADE &amp; TRUE</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bears" id="bears" aria-labelledby="bearsTitle">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="bearsTitle">Bears waiting for a family</h2>
+      <p>Pick a bear to read their certificate and start the adoption. Once a bear is placed, that exact bear won't be made again.</p>
+    </div>
+    <div class="toolbar">
+      <div class="chips" id="filterChips" role="group" aria-label="Filter bears">
+        <button class="chip" type="button" data-filter="available" aria-pressed="true">Waiting</button>
+        <button class="chip" type="button" data-filter="small" aria-pressed="false">Under 10 inches</button>
+        <button class="chip" type="button" data-filter="big" aria-pressed="false">10 inches and up</button>
+        <button class="chip" type="button" data-filter="all" aria-pressed="false">Show adopted too</button>
+      </div>
+      <label class="sr-only" for="sortBears">Sort bears</label>
+      <select id="sortBears">
+        <option value="number">Certificate number</option>
+        <option value="price-asc">Price, low to high</option>
+        <option value="price-desc">Price, high to low</option>
+      </select>
+    </div>
+    <div class="bear-grid" id="bearGrid" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="process" aria-labelledby="processTitle">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="processTitle">Four steps from workshop to your home</h2>
+      <p>It really is an adoption, not a checkout. The paperwork just happens to be adorable.</p>
+    </div>
+    <ol class="steps">
+      <li class="step"><div class="step-num" aria-hidden="true">1</div><h3>Choose a bear</h3><p>Browse the bears waiting for a family. Each one is one of a kind.</p></li>
+      <li class="step"><div class="step-num" aria-hidden="true">2</div><h3>Read their story</h3><p>Every bear has a short biography: birthday, temperament, and the maker who stitched them.</p></li>
+      <li class="step"><div class="step-num" aria-hidden="true">3</div><h3>Sign the certificate</h3><p>Your family's name is lettered onto their adoption certificate, printed on cotton stock.</p></li>
+      <li class="step"><div class="step-num" aria-hidden="true">4</div><h3>Bring them home</h3><p>Wrapped in tissue inside a keepsake box, your bear arrives ready for a first chapter with you.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="craft" id="craft" aria-labelledby="craftTitle">
+  <div class="wrap craft-grid">
+    <div class="pattern">
+      <svg viewBox="0 0 500 440" role="img" aria-label="Pattern diagram of a bear with callouts for the eyes, joints, paw pads, coat and seams">
+        <rect x="6" y="6" width="488" height="428" rx="6" fill="none" stroke="#241F18" stroke-opacity=".25" stroke-dasharray="5 6"/>
+        <g fill="#DFAE5C" stroke="#241F18" stroke-opacity=".55" stroke-width="1.6" stroke-dasharray="6 4">
+          <circle cx="200" cy="72" r="26"/><circle cx="300" cy="72" r="26"/>
+          <ellipse cx="250" cy="290" rx="76" ry="88"/>
+          <ellipse cx="160" cy="270" rx="30" ry="54" transform="rotate(-20 160 270)"/>
+          <ellipse cx="340" cy="270" rx="30" ry="54" transform="rotate(20 340 270)"/>
+          <ellipse cx="200" cy="385" rx="38" ry="34"/><ellipse cx="300" cy="385" rx="38" ry="34"/>
+          <circle cx="250" cy="120" r="62"/>
+        </g>
+        <g fill="#C17A5E" opacity=".55"><circle cx="200" cy="72" r="13"/><circle cx="300" cy="72" r="13"/></g>
+        <ellipse cx="250" cy="142" rx="26" ry="19" fill="#EBD9B4" stroke="#241F18" stroke-opacity=".4" stroke-dasharray="4 3"/>
+        <circle cx="230" cy="112" r="6" fill="#241F18"/><circle cx="270" cy="112" r="6" fill="#241F18"/>
+        <circle cx="232" cy="110" r="1.8" fill="#fff"/><circle cx="272" cy="110" r="1.8" fill="#fff"/>
+        <ellipse cx="250" cy="134" rx="8" ry="5.5" fill="#6E3B2A"/>
+        <path d="M250 140v8M240 152q10 6 20 0" stroke="#6E3B2A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <g fill="#C9805F" opacity=".75"><circle cx="200" cy="392" r="15"/><circle cx="300" cy="392" r="15"/></g>
+        <g fill="#fff" stroke="#241F18" stroke-width="1.5"><circle cx="175" cy="232" r="7"/><circle cx="325" cy="232" r="7"/><circle cx="212" cy="358" r="7"/><circle cx="288" cy="358" r="7"/><circle cx="250" cy="186" r="7"/></g>
+        <g stroke="#241F18" stroke-width="1.5" stroke-linecap="round"><path d="M175 228v8M171 232h8M325 228v8M321 232h8M212 354v8M208 358h8M288 354v8M284 358h8M250 182v8M246 186h8"/></g>
+        <g stroke="#8A4F3E" stroke-width="1.3" fill="none"><path d="M124 96L224 110M128 232L168 232M122 398L184 392M404 160L322 212M358 382L324 366"/></g>
+        <g font-family="Figtree, sans-serif" font-size="15" font-weight="600" fill="#241F18">
+          <text x="16" y="100">Glass eyes</text>
+          <text x="16" y="236">Cotter-pin joint</text>
+          <text x="16" y="402">Felt paw pads</text>
+          <text x="484" y="150" text-anchor="end">Mohair and alpaca coat</text>
+          <text x="484" y="384" text-anchor="end">Hand-sewn seams</text>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <h2 id="craftTitle">Nothing about a Tales Co. bear is mass-produced</h2>
+      <p class="lead">Every bear is cut, stuffed and stitched by one of six makers working in small batches, usually no more than a dozen bears a week between them. No two bears from the same pattern come out quite the same.</p>
+      <ul class="materials">
+        <li><h3>Mohair and alpaca coats</h3><p>Sourced from small European mills and hand-carded before cutting.</p></li>
+        <li><h3>Hand-blown glass eyes</h3><p>Made in small batches by a glassworker in Oaxaca.</p></li>
+        <li><h3>Cotter-pin joints</h3><p>Arms, legs and head move and hold a pose. No glued limbs.</p></li>
+        <li><h3>Wool felt paw pads</h3><p>Stitched by hand, one uneven line at a time. That's the point.</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="stories" aria-labelledby="storiesTitle">
+  <div class="wrap">
+    <div class="section-head"><h2 id="storiesTitle">Stories from bears already home</h2></div>
+    <div class="stories-grid">
+      <figure class="quote quote-lg">
+        <blockquote>We adopted one for my mother after she lost her childhood bear in a move sixty years ago. She cried opening the box.</blockquote>
+        <cite>Adopted family, Austin</cite>
+      </figure>
+      <figure class="quote quote-sm">
+        <blockquote>The certificate made my daughter take it so seriously. She keeps it pinned above her bed next to her own birth certificate.</blockquote>
+        <cite>Adopted family, Marin County</cite>
+      </figure>
+      <figure class="quote quote-sm">
+        <blockquote>You can tell someone's hands actually made this. The stitching isn't perfect, and that's exactly why it feels real.</blockquote>
+        <cite>Adopted family, Leeds</cite>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="care" id="care" aria-labelledby="careTitle">
+  <div class="wrap two-col">
+    <div>
+      <div class="section-head" style="margin-bottom:34px">
+        <h2 id="careTitle">Caring for your bear</h2>
+        <p>A little attention keeps a handmade bear soft for decades.</p>
+      </div>
+      <ul class="care-list">
+        <li><h3>Spot clean only</h3><p>Dab with a damp cloth and a drop of mild soap. Don't machine wash or soak.</p></li>
+        <li><h3>Air dry away from heat</h3><p>Pat dry with a towel and leave it to dry in the open air, not on a radiator.</p></li>
+        <li><h3>Brush with the fibres</h3><p>A soft brush, moving the way the mohair lies, keeps the coat full.</p></li>
+        <li><h3>Keep out of long sun</h3><p>Hand-dyed wools stay rich when they aren't left on a sunny windowsill all summer.</p></li>
+      </ul>
+    </div>
+    <div>
+      <div class="section-head" style="margin-bottom:34px"><h2>Questions about adopting</h2></div>
+      <div class="faq-list">
+        <details><summary>What name goes on the certificate?</summary><p>Whatever family name you enter on the adoption form. You can also add a short gift message if the bear is for someone else.</p></details>
+        <details><summary>How do I pay?</summary><p>After you send the adoption form, we email you an invoice with payment details and keep your bear reserved.</p></details>
+        <details><summary>When will my bear arrive?</summary><p>Every bear is packed by hand. We email you as soon as yours is on its way.</p></details>
+        <details><summary>Is each bear really one of a kind?</summary><p>Yes. Bears are made in small batches and never repeated exactly, so the bear you pick is the one you receive.</p></details>
+        <details><summary>Can I adopt a bear as a gift?</summary><p>Yes. Enter the name of the family receiving the bear and add your gift message in the form.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" aria-labelledby="contactTitle">
+  <div class="wrap contact-wrap">
+    <div>
+      <h2 id="contactTitle" style="font-size:clamp(2.1rem,3.6vw,3.1rem);color:var(--paper);margin-bottom:16px">Talk to the workshop</h2>
+      <p class="lead">Questions about a bear, an order, or a repair? Send a note and we'll reply by email.</p>
+    </div>
+    <form id="contactForm" class="form-grid" novalidate>
+      <div class="field"><label for="cName">Your name</label><input id="cName" name="name" type="text" autocomplete="name" maxlength="100"><span class="err" data-err="name"></span></div>
+      <div class="field"><label for="cEmail">Email</label><input id="cEmail" name="email" type="email" autocomplete="email" maxlength="200"><span class="err" data-err="email"></span></div>
+      <div class="field"><label for="cMsg">Message</label><textarea id="cMsg" name="message" maxlength="2000"></textarea><span class="err" data-err="message"></span></div>
+      <div><button class="btn btn-gold" type="submit">Send message</button></div>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<section class="newsletter" id="news" aria-labelledby="newsTitle">
+  <div class="wrap">
+    <h2 id="newsTitle">Be first to meet the next litter</h2>
+    <p class="lead">A small batch of bears is released every few months. Join the list and get first pick before they're posted publicly.</p>
+    <form class="n-form" id="newsForm" novalidate>
+      <label class="sr-only" for="nEmail">Email address</label>
+      <input id="nEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+      <button class="btn btn-gold" type="submit">Join the list</button>
+    </form>
+    <p class="form-status" id="newsStatus" role="status" aria-live="polite"></p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Adoption Tales Co. Handmade in small batches.</span>
+    <ul>
+      <li><a href="#bears">Meet the bears</a></li>
+      <li><a href="#craft">Our craft</a></li>
+      <li><a href="#care">Care instructions</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<dialog id="adoptDialog" aria-labelledby="adoptTitle">
+  <div class="modal-wrap" id="modalWrap"><div class="modal" id="modal"></div></div>
+</dialog>
+
+<script>
+(() => {
+  'use strict';
+
+  /* =====================================================
+     SETTINGS: yahan apna email likho.
+     Adoption, contact aur newsletter ke messages is email par aayenge.
+     ===================================================== */
+  const OWNER_EMAIL = 'you@example.com';
+
+  /* =====================================================
+     BEARS DATA: yahan se bears edit karo.
+     status: 'available' | 'reserved' | 'adopted'
+     ===================================================== */
+  const BEARS = [
+    { id:'marigold', number:'0155', name:'Marigold', price:68, traits:'Curious, chatty, left-pawed',
+      blurb:"Marigold was the first bear made from this season's honey-gold mohair. She hums when she's happy, or so the workshop says.",
+      coat:'Honey mohair', height:'11 inches', born:'Spring, Workshop No. 3', stitched_by:'M. Alvarez',
+      color_body:'#DFAE5C', color_ear:'#C0913A', color_nose:'#7A4B33', status:'available' },
+    { id:'thistle', number:'0161', name:'Thistle', price:74, traits:'Quiet, brave, one slightly lopsided ear',
+      blurb:"Thistle's sage-green wool felt was hand-dyed with yarrow leaves. He's stitched a touch crooked on purpose, because his maker liked him that way.",
+      coat:'Yarrow-dyed felt', height:'9.5 inches', born:'Spring, Workshop No. 2', stitched_by:'J. Okafor',
+      color_body:'#9DAB8C', color_ear:'#7C8B6F', color_nose:'#5B6650', status:'available' },
+    { id:'bramble', number:'0163', name:'Bramble', price:82, traits:'Stubborn, warm, collects buttons',
+      blurb:"Bramble came out a little larger than planned, and the workshop let him stay that way. He's the sturdiest bear in this season's litter.",
+      coat:'Rust alpaca blend', height:'13 inches', born:'Summer, Workshop No. 1', stitched_by:'M. Alvarez',
+      color_body:'#C9805F', color_ear:'#B5654E', color_nose:'#6E3B2A', status:'available' },
+    { id:'juniper', number:'0168', name:'Juniper', price:79, traits:'Dreamy, gentle, hums off-key',
+      blurb:'Juniper is cut from dusty-blue wool and carries a tiny hand-embroidered star behind one ear. She likes window seats and long afternoons.',
+      coat:'Dusty-blue wool', height:'10 inches', born:'Summer, Workshop No. 3', stitched_by:'A. Lindqvist',
+      color_body:'#8FA6B8', color_ear:'#6F879A', color_nose:'#46586A', status:'available' },
+    { id:'clover', number:'0171', name:'Clover', price:71, traits:'Playful, fast, always missing a sock',
+      blurb:'Clover is the smallest of the litter and the quickest to make friends. Her cream mohair coat is soft enough to fall asleep against.',
+      coat:'Cream mohair', height:'8.5 inches', born:'Summer, Workshop No. 2', stitched_by:'J. Okafor',
+      color_body:'#EBD9B4', color_ear:'#D4BC8A', color_nose:'#8A6A44', status:'available' },
+    { id:'ember', number:'0174', name:'Ember', price:96, traits:'Bold, loyal, smells faintly of cedar',
+      blurb:'Ember is our largest bear this season, made from deep-red alpaca. He was stitched slowly over four evenings and it shows.',
+      coat:'Deep-red alpaca', height:'15 inches', born:'Autumn, Workshop No. 1', stitched_by:'M. Alvarez',
+      color_body:'#A8453A', color_ear:'#8C3329', color_nose:'#4A1D17', status:'available' }
+  ];
+
+  // ---------- helpers ----------
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  const today = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+  const inches = (h) => parseFloat(String(h)) || 0;
+  const emailOk = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((v || '').trim());
+
+  // Is browser ke liye already request kiye gaye bears (taake dobara na dikhen)
+  const RKEY = 'tales_reserved';
+  const getReserved = () => { try { return JSON.parse(localStorage.getItem(RKEY) || '[]'); } catch { return []; } };
+  const addReserved = (id) => { try { localStorage.setItem(RKEY, JSON.stringify([...new Set([...getReserved(), id])])); } catch {} };
+  const applyReserved = () => { const r = getReserved(); BEARS.forEach((b) => { if (b.status === 'available' && r.includes(b.id)) b.status = 'reserved'; }); };
+
+  function sendMail(subject, body) {
+    window.location.href = 'mailto:' + OWNER_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  }
+
+  function lighten(hex, amt) {
+    const n = parseInt(hex.slice(1), 16);
+    const mix = (c) => Math.round(c + (255 - c) * amt);
+    return `rgb(${mix(n >> 16)},${mix((n >> 8) & 255)},${mix(n & 255)})`;
+  }
+
+  function bearSVG(b, label) {
+    const body = b.color_body || '#DFAE5C', ear = b.color_ear || '#C0913A', nose = b.color_nose || '#7A4B33';
+    const muzzle = lighten(body, 0.55), inner = lighten(ear, 0.25);
+    return `<svg viewBox="0 0 200 200" role="img" aria-label="${esc(label || b.name)}">
+      <circle cx="54" cy="52" r="30" fill="${esc(ear)}"/><circle cx="146" cy="52" r="30" fill="${esc(ear)}"/>
+      <circle cx="54" cy="52" r="16" fill="${inner}" opacity=".8"/><circle cx="146" cy="52" r="16" fill="${inner}" opacity=".8"/>
+      <ellipse cx="100" cy="172" rx="62" ry="26" fill="${esc(ear)}"/>
+      <circle cx="100" cy="106" r="70" fill="${esc(body)}"/>
+      <path d="M100 38v18" stroke="#241F18" stroke-opacity=".28" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round"/>
+      <ellipse cx="100" cy="128" rx="30" ry="23" fill="${muzzle}"/>
+      <circle cx="76" cy="98" r="8" fill="#241F18"/><circle cx="124" cy="98" r="8" fill="#241F18"/>
+      <circle cx="79" cy="95" r="2.6" fill="#fff"/><circle cx="127" cy="95" r="2.6" fill="#fff"/>
+      <ellipse cx="100" cy="116" rx="11" ry="8" fill="${esc(nose)}"/>
+      <path d="M100 124v9M90 138q10 8 20 0" stroke="${esc(nose)}" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  const stampSVG = (word) => `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="#A8372A" stroke-width="3"/><circle cx="50" cy="50" r="38" fill="none" stroke="#A8372A" stroke-width="1.4"/><text x="50" y="${word.length > 8 ? 52 : 54}" text-anchor="middle" font-family="Special Elite, monospace" font-size="${word.length > 8 ? 11 : 12.5}" fill="#A8372A">${esc(word)}</text></svg>`;
+
+  // ---------- state ----------
+  applyReserved();
+  const state = { bears: BEARS, filter: 'available', sort: 'number', heroId: null, heroName: '' };
+  const available = () => state.bears.filter((b) => b.status === 'available');
+  const byId = (id) => state.bears.find((b) => b.id === id);
+
+  // ---------- nav ----------
+  const header = $('.site-header');
+  const navToggle = $('#navToggle');
+  function setNav(open) {
+    header.classList.toggle('nav-open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  navToggle.addEventListener('click', () => setNav(!header.classList.contains('nav-open')));
+  $$('#navLinks a').forEach((a) => a.addEventListener('click', () => setNav(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setNav(false); });
+
+  // ---------- hero certificate ----------
+  const heroEls = {
+    chips: $('#heroChips'), name: $('#heroName'), adopt: $('#heroAdopt'), count: $('#heroCount'),
+    num: $('#hcNumber'), bear: $('#hcBear'), sign: $('#hcSign'), born: $('#hcBorn'), coat: $('#hcCoat'),
+    by: $('#hcBy'), date: $('#hcDate'), stamp: $('#hcStamp')
+  };
+
+  function renderHero() {
+    const list = available();
+    if (!list.length) {
+      heroEls.chips.innerHTML = '';
+      heroEls.adopt.disabled = true;
+      heroEls.adopt.textContent = 'All bears adopted';
+      heroEls.count.textContent = 'Every bear in this litter has found a family. Join the list below for the next one.';
+      return;
+    }
+    if (!list.some((b) => b.id === state.heroId)) state.heroId = list[0].id;
+    const b = byId(state.heroId);
+    heroEls.chips.innerHTML = list.slice(0, 6).map((x) =>
+      `<button type="button" class="chip" data-id="${esc(x.id)}" aria-pressed="${x.id === b.id}">${esc(x.name)}</button>`).join('');
+    heroEls.num.textContent = `No. ${b.number}`;
+    heroEls.bear.textContent = b.name;
+    heroEls.born.textContent = b.born || '-';
+    heroEls.coat.textContent = b.coat || '-';
+    heroEls.by.textContent = b.stitched_by || '-';
+    heroEls.date.textContent = today;
+    heroEls.adopt.disabled = false;
+    heroEls.adopt.textContent = `Adopt ${b.name}`;
+    heroEls.count.textContent = `${list.length} ${list.length === 1 ? 'bear is' : 'bears are'} waiting for a family right now.`;
+    renderSign();
+  }
+
+  function renderSign() {
+    const n = state.heroName.trim();
+    const has = n.length >= 2;
+    heroEls.sign.textContent = has ? n : 'Your name here';
+    heroEls.sign.classList.toggle('is-empty', !has);
+    if (has && !heroEls.stamp.classList.contains('is-down')) heroEls.stamp.classList.add('is-down');
+    if (!has) heroEls.stamp.classList.remove('is-down');
+  }
+
+  heroEls.name.addEventListener('input', (e) => { state.heroName = e.target.value; renderSign(); });
+  heroEls.chips.addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    state.heroId = chip.dataset.id;
+    renderHero();
+  });
+  heroEls.adopt.addEventListener('click', () => {
+    const b = byId(state.heroId);
+    if (b) openAdopt(b, state.heroName.trim());
+  });
+
+  // ---------- bear grid ----------
+  const grid = $('#bearGrid');
+
+  function visibleBears() {
+    let list = state.bears.slice();
+    if (state.filter === 'available') list = list.filter((b) => b.status === 'available');
+    if (state.filter === 'small') list = list.filter((b) => b.status === 'available' && inches(b.height) < 10);
+    if (state.filter === 'big') list = list.filter((b) => b.status === 'available' && inches(b.height) >= 10);
+    const sorts = {
+      number: (a, b) => String(a.number).localeCompare(String(b.number)),
+      'price-asc': (a, b) => a.price - b.price,
+      'price-desc': (a, b) => b.price - a.price
+    };
+    return list.sort(sorts[state.sort]);
+  }
+
+  function cardHTML(b) {
+    const gone = b.status !== 'available';
+    const stampWord = b.status === 'adopted' ? 'ADOPTED' : 'RESERVED';
+    return `<div class="bear-card${gone ? ' is-gone' : ''}" data-id="${esc(b.id)}" ${gone
+      ? `aria-label="${esc(b.name)} is ${b.status === 'adopted' ? 'already adopted' : 'reserved'}"`
+      : `role="button" tabindex="0" aria-label="Read ${esc(b.name)}'s story and adopt, $${esc(b.price)}"`}>
+      <span class="tag">No. ${esc(b.number)}</span>
+      <div class="portrait">${bearSVG(b)}</div>
+      ${gone ? `<div class="gone-stamp">${stampSVG(stampWord)}</div>` : ''}
+      <div class="bear-body">
+        <h3>${esc(b.name)}</h3>
+        <p class="bear-traits">${esc(b.traits)}</p>
+        <p class="bear-blurb">${esc(b.blurb)}</p>
+        <div class="bear-foot">
+          <span class="price">$${esc(b.price)}</span>
+          <span class="bear-cta">${gone ? (b.status === 'adopted' ? 'Has a family' : 'Reserved') : `Adopt ${esc(b.name)}`}</span>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function renderGrid() {
+    const list = visibleBears();
+    if (!list.length) {
+      grid.innerHTML = `<div class="state-msg"><p>${state.filter === 'available' || state.filter === 'all'
+        ? 'Every bear has found a family. The next litter is coming soon.'
+        : 'No bears match this filter right now.'}</p>
+        <a class="btn btn-line" href="#news">Hear about the next litter</a></div>`;
+      return;
+    }
+    grid.innerHTML = list.map(cardHTML).join('');
+  }
+
+  grid.addEventListener('click', (e) => {
+    const card = e.target.closest('.bear-card:not(.is-gone)');
+    if (card) { const b = byId(card.dataset.id); if (b) openAdopt(b, state.heroName.trim()); }
+  });
+  grid.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const card = e.target.closest('.bear-card:not(.is-gone)');
+    if (card) { e.preventDefault(); const b = byId(card.dataset.id); if (b) openAdopt(b, state.heroName.trim()); }
+  });
+  $('#filterChips').addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    state.filter = chip.dataset.filter;
+    $$('#filterChips .chip').forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+    renderGrid();
+  });
+  $('#sortBears').addEventListener('change', (e) => { state.sort = e.target.value; renderGrid(); });
+
+  // ---------- adopt dialog ----------
+  const dialog = $('#adoptDialog');
+  const modal = $('#modal');
+  let current = null;
+
+  function certHTML(b) {
+    return `<div class="certificate">
+      <div class="cert-head"><span>Adoption Tales Co.</span><span>No. ${esc(b.number)}</span></div>
+      <div class="cert-title">Certificate of Adoption</div>
+      <p class="cert-line">This certifies that</p>
+      <div class="cert-bear">${esc(b.name)}</div>
+      <p class="cert-line">has been adopted by the family of</p>
+      <div class="cert-sign is-empty" id="mSign">Your name here</div>
+      <dl class="cert-rows">
+        <div class="cert-row"><dt>Born</dt><dd>${esc(b.born || '-')}</dd></div>
+        <div class="cert-row"><dt>Coat</dt><dd>${esc(b.coat || '-')}</dd></div>
+        <div class="cert-row"><dt>Height</dt><dd>${esc(b.height || '-')}</dd></div>
+        <div class="cert-row"><dt>Stitched by</dt><dd>${esc(b.stitched_by || '-')}</dd></div>
+      </dl>
+    </div>`;
+  }
+
+  function openAdopt(b, family) {
+    current = b;
+    modal.innerHTML = `
+      <button class="modal-close" type="button" aria-label="Close" data-close>&times;</button>
+      <div class="modal-side">
+        <div class="portrait-sm">${bearSVG(b)}<div><h2 id="adoptTitle">Adopt ${esc(b.name)}</h2><p class="sub">${esc(b.traits)}</p></div></div>
+        ${certHTML(b)}
+      </div>
+      <form id="adoptForm" class="form-grid" novalidate>
+        <p class="sub">${esc(b.blurb)}</p>
+        <div class="field"><label for="fFamily">Family name for the certificate</label><input id="fFamily" name="family_name" type="text" maxlength="80" autocomplete="family-name" value="${esc(family || '')}"><span class="err" data-err="family_name"></span></div>
+        <div class="field"><label for="fEmail">Email</label><input id="fEmail" name="email" type="email" maxlength="200" autocomplete="email"><span class="err" data-err="email"></span></div>
+        <div class="field"><label for="fPhone">Phone <span class="opt">(optional, for delivery)</span></label><input id="fPhone" name="phone" type="tel" maxlength="40" autocomplete="tel"></div>
+        <div class="field"><label for="fAddress">Delivery address</label><textarea id="fAddress" name="address" maxlength="400" autocomplete="street-address" style="min-height:84px"></textarea><span class="err" data-err="address"></span></div>
+        <div class="field"><label for="fGift">Gift message <span class="opt">(optional)</span></label><input id="fGift" name="gift_message" type="text" maxlength="300"></div>
+        <div class="total"><span>Adoption fee</span><strong>$${esc(b.price)}</strong></div>
+        <button class="btn btn-gold" type="submit" id="fSubmit">Adopt ${esc(b.name)}</button>
+        <p class="form-status" id="fStatus" role="status" aria-live="polite"></p>
+      </form>`;
+    const sign = $('#mSign');
+    const fam = $('#fFamily');
+    const sync = () => {
+      const n = fam.value.trim();
+      sign.textContent = n.length >= 2 ? n : 'Your name here';
+      sign.classList.toggle('is-empty', n.length < 2);
+    };
+    fam.addEventListener('input', sync);
+    sync();
+    $('#adoptForm').addEventListener('submit', submitAdopt);
+    if (!dialog.open) dialog.showModal();
+    dialog.scrollTop = 0;
+    (family ? $('#fEmail') : fam).focus();
+  }
+
+  function showErrors(form, errors = {}) {
+    $$('[data-err]', form).forEach((s) => {
+      const msg = errors[s.dataset.err] || '';
+      s.textContent = msg;
+      const input = $(`[name="${s.dataset.err}"]`, form);
+      if (input) input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    });
+    const first = $('[aria-invalid="true"]', form);
+    if (first) first.focus();
+  }
+
+  function localErrors(v) {
+    const e = {};
+    if ((v.family_name || '').trim().length < 2) e.family_name = 'Add the family name for the certificate.';
+    if (!emailOk(v.email)) e.email = 'Enter a valid email, like name@example.com.';
+    if ((v.address || '').trim().length < 8) e.address = 'Add the full delivery address.';
+    return e;
+  }
+
+  function submitAdopt(ev) {
+    ev.preventDefault();
+    const form = ev.currentTarget;
+    const status = $('#fStatus');
+    const v = Object.fromEntries(new FormData(form));
+    status.className = 'form-status';
+    status.textContent = '';
+    const errs = localErrors(v);
+    showErrors(form, errs);
+    if (Object.keys(errs).length) return;
+
+    const b = current;
+    const ref = 'ATC-' + Date.now().toString(36).toUpperCase();
+    const body = [
+      `Adoption request ${ref}`, '',
+      `Bear: ${b.name} (No. ${b.number}) - $${b.price}`,
+      `Family name: ${v.family_name.trim()}`,
+      `Email: ${v.email.trim()}`,
+      `Phone: ${(v.phone || '').trim() || '-'}`,
+      `Address: ${v.address.trim()}`,
+      `Gift message: ${(v.gift_message || '').trim() || '-'}`
+    ].join('\n');
+
+    addReserved(b.id);
+    b.status = 'reserved';
+    showSuccess({ name: b.name, family: v.family_name.trim(), order: ref });
+    renderHero();
+    renderGrid();
+    sendMail(`Adoption request: ${b.name} (${ref})`, body);
+  }
+
+  function showSuccess({ name, family, order }) {
+    modal.innerHTML = `
+      <button class="modal-close" type="button" aria-label="Close" data-close>&times;</button>
+      <div class="success">
+        <div class="stamp-big">${stampSVG('ADOPTED')}</div>
+        <h2 id="adoptTitle">${esc(name)} is ${family ? `joining the ${esc(family)} family` : 'coming home'}</h2>
+        <p>Your email app should have opened with your adoption request ready to send. Please press <b>Send</b> in that email to confirm. We will reply with payment details.</p>
+        ${order ? `<p class="ref">Reference: ${esc(order)}</p>` : ''}
+        <button class="btn btn-gold" type="button" data-close>Back to the bears</button>
+      </div>`;
+    if (!dialog.open) dialog.showModal();
+    dialog.scrollTop = 0;
+  }
+
+  dialog.addEventListener('click', (e) => {
+    if (e.target.closest('[data-close]') || e.target === $('#modalWrap')) dialog.close();
+  });
+  dialog.addEventListener('close', () => { current = null; });
+
+  // ---------- contact + newsletter ----------
+  const contactForm = $('#contactForm');
+  const contactStatus = $('.form-status', contactForm);
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = Object.fromEntries(new FormData(contactForm));
+    const errs = {};
+    if ((v.name || '').trim().length < 2) errs.name = 'Add your name.';
+    if (!emailOk(v.email)) errs.email = 'Enter a valid email, like name@example.com.';
+    if ((v.message || '').trim().length < 10) errs.message = 'Write a little more so we can help.';
+    showErrors(contactForm, errs);
+    if (Object.keys(errs).length) {
+      contactStatus.className = 'form-status bad';
+      contactStatus.textContent = 'Please fix the highlighted fields.';
+      return;
+    }
+    sendMail(`Message from ${v.name.trim()}`, `Name: ${v.name.trim()}\nEmail: ${v.email.trim()}\n\n${v.message.trim()}`);
+    contactForm.reset();
+    contactStatus.className = 'form-status ok';
+    contactStatus.textContent = 'Your email app opened. Press Send there to deliver your message.';
+  });
+
+  const newsForm = $('#newsForm');
+  const newsStatus = $('#newsStatus');
+  newsForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = (new FormData(newsForm).get('email') || '').toString().trim();
+    if (!emailOk(email)) {
+      newsStatus.className = 'form-status bad';
+      newsStatus.textContent = 'Enter a valid email.';
+      return;
+    }
+    sendMail('Join the list', `Please add me to the next-litter list: ${email}`);
+    newsForm.reset();
+    newsStatus.className = 'form-status ok';
+    newsStatus.textContent = 'Your email app opened. Press Send to join the list.';
+  });
+
+  // ---------- go ----------
+  renderHero();
+  renderGrid();
+})();
+</script>
+</body>
+</html>
