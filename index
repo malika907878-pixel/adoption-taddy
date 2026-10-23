@@ -247,6 +247,31 @@ dialog::backdrop{background:rgba(6,12,9,.78);backdrop-filter:blur(4px)}
   .cert-bear{font-size:2rem}
   .quote-lg{padding:30px 24px}
 }
+
+.admin-modal{display:block;max-width:900px;padding:32px}
+.admin-modal h2{font-size:1.9rem;color:var(--paper)}
+.a-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:0 56px 16px 0}
+.a-note{background:rgba(217,164,65,.1);border:1px solid rgba(217,164,65,.4);border-radius:12px;padding:12px 16px;font-size:.93rem;margin-bottom:18px}
+.a-bear{border:1px solid var(--line-dark);border-radius:12px;margin-bottom:10px;background:rgba(241,231,207,.03)}
+.a-bear summary{cursor:pointer;padding:14px 18px;display:flex;justify-content:space-between;gap:12px;font-weight:700;color:var(--paper);list-style:none}
+.a-bear summary::-webkit-details-marker{display:none}
+.a-bear summary em{font-style:normal;font-weight:400;color:var(--on-dark-soft);font-size:.9rem}
+.a-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:4px 18px 18px}
+.a-grid .full{grid-column:1/-1}
+.a-grid label{display:block;font-size:.82rem;font-weight:600;margin-bottom:4px}
+.a-grid input,.a-grid textarea,.a-grid select{width:100%;min-height:42px;padding:8px 12px;border-radius:10px;border:1.5px solid rgba(241,231,207,.3);background:rgba(241,231,207,.06)}
+.a-grid select{background:var(--forest-900)}
+.a-grid select option{color:var(--paper);background:var(--forest-900)}
+.a-grid input[type=color]{padding:2px;height:42px;cursor:pointer}
+.a-grid textarea{min-height:84px;resize:vertical}
+.a-actions{display:flex;gap:10px;flex-wrap:wrap}
+.a-btns{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 8px}
+.btn-sm{min-height:40px;padding:6px 18px;font-size:.92rem}
+.a-sec{border-top:1px solid var(--line-dark);margin-top:22px;padding-top:18px}
+.a-sec h3{font-family:var(--body);font-weight:700;font-size:1.1rem;color:var(--paper);margin-bottom:8px}
+.a-sec input[type=text],.a-sec input[type=password]{width:100%;min-height:44px;padding:8px 14px;border-radius:10px;border:1.5px solid rgba(241,231,207,.3);background:rgba(241,231,207,.06);margin:6px 0}
+.a-code{width:100%;min-height:150px;font-family:var(--typed);font-size:.8rem;padding:10px;border-radius:10px;border:1.5px solid rgba(241,231,207,.3);background:rgba(0,0,0,.25);margin-top:8px}
+@media (max-width:600px){.a-grid{grid-template-columns:1fr}.admin-modal{padding:24px 18px}}
 </style>
 </head>
 <body>
@@ -491,6 +516,10 @@ dialog::backdrop{background:rgba(6,12,9,.78);backdrop-filter:blur(4px)}
   <div class="modal-wrap" id="modalWrap"><div class="modal" id="modal"></div></div>
 </dialog>
 
+<dialog id="adminDialog" aria-labelledby="adminTitle">
+  <div class="modal-wrap" id="adminWrap"><div class="modal admin-modal" id="adminBox"></div></div>
+</dialog>
+
 <script>
 (() => {
   'use strict';
@@ -505,6 +534,7 @@ dialog::backdrop{background:rgba(6,12,9,.78);backdrop-filter:blur(4px)}
      BEARS DATA: yahan se bears edit karo.
      status: 'available' | 'reserved' | 'adopted'
      ===================================================== */
+  /*BEARS_START*/
   const BEARS = [
     { id:'marigold', number:'0155', name:'Marigold', price:68, traits:'Curious, chatty, left-pawed',
       blurb:"Marigold was the first bear made from this season's honey-gold mohair. She hums when she's happy, or so the workshop says.",
@@ -531,6 +561,8 @@ dialog::backdrop{background:rgba(6,12,9,.78);backdrop-filter:blur(4px)}
       coat:'Deep-red alpaca', height:'15 inches', born:'Autumn, Workshop No. 1', stitched_by:'M. Alvarez',
       color_body:'#A8453A', color_ear:'#8C3329', color_nose:'#4A1D17', status:'available' }
   ];
+  /*BEARS_END*/
+  const BASE = JSON.parse(JSON.stringify(BEARS));
 
   // ---------- helpers ----------
   const $ = (s, el = document) => el.querySelector(s);
@@ -875,6 +907,212 @@ dialog::backdrop{background:rgba(6,12,9,.78);backdrop-filter:blur(4px)}
     newsStatus.className = 'form-status ok';
     newsStatus.textContent = 'Your email app opened. Press Send to join the list.';
   });
+
+
+  // ---------- admin (yahan se: https://yoursite/#admin) ----------
+  // Password ka SHA-256 hash. Naya password: Admin panel > "Change admin password".
+  const ADMIN_HASH = 'f1d66862727d6719a03d6177f51bf4ff7b301eaf1fb781f64d778b7494c2b316';
+  const DKEY = 'tales_admin_draft', SKEY = 'tales_admin_ok', LKEY = 'tales_admin_lock';
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const lsGet = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
+  const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
+  const lsDel = (k) => { try { localStorage.removeItem(k); } catch {} };
+  const isAdmin = () => { try { return sessionStorage.getItem(SKEY) === '1'; } catch { return false; } };
+  const setAdmin = (on) => { try { on ? sessionStorage.setItem(SKEY, '1') : sessionStorage.removeItem(SKEY); } catch {} };
+  const loadDraft = () => { try { const d = JSON.parse(lsGet(DKEY) || 'null'); return Array.isArray(d) ? d : null; } catch { return null; } };
+  const sha256 = async (s) => {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return [...new Uint8Array(buf)].map((x) => x.toString(16).padStart(2, '0')).join('');
+  };
+
+  let work = null;
+  let openIdx = -1;
+  function applyWork() { BEARS.splice(0, BEARS.length, ...clone(work)); renderHero(); renderGrid(); }
+  if (isAdmin() && loadDraft()) { work = loadDraft(); BEARS.splice(0, BEARS.length, ...clone(work)); }
+
+  const aDlg = $('#adminDialog');
+  const aBox = $('#adminBox');
+  const FIELDS = [
+    ['name', 'Name', 'text'], ['number', 'Certificate no.', 'text'], ['price', 'Price ($)', 'number'],
+    ['height', 'Height (e.g. 11 inches)', 'text'], ['traits', 'Traits', 'text'], ['coat', 'Coat', 'text'],
+    ['born', 'Born', 'text'], ['stitched_by', 'Stitched by', 'text']
+  ];
+  const COLORS = [['color_body', 'Body colour', '#DFAE5C'], ['color_ear', 'Ear colour', '#C0913A'], ['color_nose', 'Nose colour', '#7A4B33']];
+  const STATUSES = [['available', 'Available'], ['reserved', 'Reserved'], ['adopted', 'Adopted']];
+
+  const bearForm = (b, i) => `<details class="a-bear" data-i="${i}"${i === openIdx ? ' open' : ''}>
+    <summary><span data-sum>${esc(b.name || 'New bear')}</span><em data-sub>${esc(b.status)} · $${esc(b.price)}</em></summary>
+    <div class="a-grid">
+      ${FIELDS.map(([k, l, t]) => `<div><label for="a${i}${k}">${l}</label><input id="a${i}${k}" data-k="${k}" type="${t}"${t === 'number' ? ' min="0" step="1"' : ''} value="${esc(b[k] ?? '')}"></div>`).join('')}
+      <div class="full"><label for="a${i}blurb">Story (blurb)</label><textarea id="a${i}blurb" data-k="blurb">${esc(b.blurb || '')}</textarea></div>
+      ${COLORS.map(([k, l, d]) => `<div><label for="a${i}${k}">${l}</label><input id="a${i}${k}" data-k="${k}" type="color" value="${esc(b[k] || d)}"></div>`).join('')}
+      <div><label for="a${i}status">Status</label><select id="a${i}status" data-k="status">${STATUSES.map(([v, l]) => `<option value="${v}"${b.status === v ? ' selected' : ''}>${l}</option>`).join('')}</select></div>
+      <div class="full a-actions"><button type="button" class="btn btn-line btn-sm" data-act="dup">Duplicate</button><button type="button" class="btn btn-line btn-sm" data-act="del">Delete</button></div>
+    </div></details>`;
+
+  const rerenderList = () => { $('#aList').innerHTML = work.map(bearForm).join(''); };
+  const aStatus = (msg, cls = '') => { const s = $('#aStatus'); if (s) { s.className = 'form-status ' + cls; s.textContent = msg; } };
+  function saveWork() { lsSet(DKEY, JSON.stringify(work)); applyWork(); aStatus('Draft is browser mein save ho gaya.', 'ok'); }
+
+  const bearsCode = () => 'const BEARS = ' + JSON.stringify(work, null, 2).replace(/</g, '\\u003c') + ';';
+  function injectBears(src) {
+    const a = '/*BEARS_' + 'START*/', z = '/*BEARS_' + 'END*/';
+    const i = src.indexOf(a), j = src.indexOf(z);
+    if (i < 0 || j < i) throw new Error('markers not found');
+    return src.slice(0, i + a.length) + '\n  ' + bearsCode().replace(/\n/g, '\n  ') + '\n  ' + src.slice(j);
+  }
+
+  function showLogin() {
+    aBox.innerHTML = `<button class="modal-close" type="button" aria-label="Close" data-aclose>&times;</button>
+      <h2 id="adminTitle">Admin login</h2>
+      <form id="aLogin" class="form-grid" novalidate style="margin-top:18px">
+        <div class="field"><label for="aPass">Password</label><input id="aPass" type="password" autocomplete="current-password"><span class="err" id="aErr"></span></div>
+        <button class="btn btn-gold" type="submit">Log in</button>
+      </form>`;
+    const pass = $('#aPass');
+    $('#aLogin').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const err = $('#aErr');
+      let lock = {};
+      try { lock = JSON.parse(lsGet(LKEY) || '{}'); } catch {}
+      if (lock.until && lock.until > Date.now()) {
+        err.textContent = `Bohat ghalat koshishen. ${Math.ceil((lock.until - Date.now()) / 60000)} minute baad dobara try karo.`;
+        return;
+      }
+      let ok = false;
+      try { ok = (await sha256(pass.value)) === ADMIN_HASH; }
+      catch { err.textContent = 'Ye browser password check nahi kar sakta. Site ko https se kholo.'; return; }
+      if (!ok) {
+        const n = (lock.n || 0) + 1;
+        lsSet(LKEY, JSON.stringify(n >= 5 ? { n: 0, until: Date.now() + 5 * 60000 } : { n }));
+        err.textContent = 'Password ghalat hai.';
+        pass.setAttribute('aria-invalid', 'true');
+        pass.select();
+        return;
+      }
+      lsDel(LKEY);
+      setAdmin(true);
+      work = loadDraft() || clone(BASE);
+      if (loadDraft()) applyWork();
+      showPanel();
+    });
+    pass.focus();
+  }
+
+  function showPanel() {
+    if (!work) work = loadDraft() || clone(BASE);
+    aBox.innerHTML = `<button class="modal-close" type="button" aria-label="Close" data-aclose>&times;</button>
+      <div class="a-top"><h2 id="adminTitle">Admin</h2><button class="btn btn-line btn-sm" type="button" data-act="logout">Log out</button></div>
+      <div class="a-note"><b>Zaroori:</b> yahan ki tabdeeliyan sirf is browser mein dikhti hain. Visitors ko dikhane ke liye <b>Download updated index.html</b> dabao aur wo file GitHub par purani <code>index.html</code> ki jagah upload karo.</div>
+      <div id="aList">${work.map(bearForm).join('')}</div>
+      <div class="a-btns">
+        <button class="btn btn-gold btn-sm" type="button" data-act="add">Add a bear</button>
+        <button class="btn btn-line btn-sm" type="button" data-act="download">Download updated index.html</button>
+      </div>
+      <p class="form-status" id="aStatus" role="status" aria-live="polite"></p>
+      <div class="a-sec"><h3>BEARS code copy karo</h3>
+        <p class="sub">Download na chale to ye code <code>index.html</code> mein purane <code>const BEARS = [...]</code> ki jagah paste karo.</p>
+        <button class="btn btn-line btn-sm" type="button" data-act="code">Show and copy code</button>
+        <textarea id="aCode" class="a-code" readonly hidden aria-label="BEARS code"></textarea></div>
+      <div class="a-sec"><h3>Change admin password</h3>
+        <p class="sub">Naya password likho (kam az kam 10 characters), phir neeche wali line <code>index.html</code> mein <code>const ADMIN_HASH = '...';</code> ki jagah paste karo.</p>
+        <label class="sr-only" for="aNewPass">New password</label>
+        <input id="aNewPass" type="password" autocomplete="new-password" placeholder="New password">
+        <button class="btn btn-line btn-sm" type="button" data-act="hash">Make hash line</button>
+        <label class="sr-only" for="aHashOut">Hash line</label>
+        <input id="aHashOut" type="text" readonly placeholder="Hash line yahan aayegi"></div>
+      <div class="a-sec"><h3>Reset</h3>
+        <div class="a-actions">
+          <button class="btn btn-line btn-sm" type="button" data-act="discard">Discard draft (file wali list par wapas)</button>
+          <button class="btn btn-line btn-sm" type="button" data-act="clearres">Is browser ke "Reserved" clear karo</button>
+        </div></div>`;
+  }
+
+  function openAdmin() {
+    if (aDlg.open) return;
+    if (isAdmin()) showPanel(); else showLogin();
+    aDlg.showModal();
+    aDlg.scrollTop = 0;
+  }
+
+  aBox.addEventListener('input', (e) => {
+    const el = e.target.closest('[data-k]');
+    const det = el && el.closest('[data-i]');
+    if (!det) return;
+    const i = +det.dataset.i, k = el.dataset.k;
+    work[i][k] = k === 'price' ? (Number(el.value) || 0) : el.value;
+    saveWork();
+    const b = work[i];
+    $('[data-sum]', det).textContent = b.name || 'New bear';
+    $('[data-sub]', det).textContent = `${b.status} · $${b.price}`;
+  });
+
+  aBox.addEventListener('click', async (e) => {
+    const t = e.target.closest('[data-act],[data-aclose]');
+    if (!t) return;
+    if (t.hasAttribute('data-aclose')) { aDlg.close(); return; }
+    const act = t.dataset.act;
+    const det = t.closest('[data-i]');
+    const i = det ? +det.dataset.i : -1;
+    if (act === 'logout') { setAdmin(false); aDlg.close(); location.reload(); return; }
+    if (act === 'add') {
+      work.push({ id: 'bear-' + Date.now().toString(36), number: String(Date.now()).slice(-4), name: 'New bear', price: 70,
+        traits: '', blurb: '', coat: '', height: '10 inches', born: '', stitched_by: '',
+        color_body: '#DFAE5C', color_ear: '#C0913A', color_nose: '#7A4B33', status: 'available' });
+      openIdx = work.length - 1; rerenderList(); saveWork(); return;
+    }
+    if (act === 'dup' && i >= 0) {
+      const c = clone(work[i]); c.id = 'bear-' + Date.now().toString(36); c.name += ' copy'; c.status = 'available';
+      work.splice(i + 1, 0, c); openIdx = i + 1; rerenderList(); saveWork(); return;
+    }
+    if (act === 'del' && i >= 0) {
+      if (!confirm(`Delete "${work[i].name}"?`)) return;
+      work.splice(i, 1); openIdx = -1; rerenderList(); saveWork(); return;
+    }
+    if (act === 'code') {
+      const ta = $('#aCode'); ta.hidden = false; ta.value = bearsCode(); ta.select();
+      try { await navigator.clipboard.writeText(ta.value); aStatus('Code copy ho gaya.', 'ok'); }
+      catch { aStatus('Code neeche hai, select karke copy karo.', 'ok'); }
+      return;
+    }
+    if (act === 'download') {
+      try {
+        const res = await fetch(location.href.split('#')[0], { cache: 'no-store' });
+        if (!res.ok) throw new Error('fetch failed');
+        const out = injectBears(await res.text());
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([out], { type: 'text/html' }));
+        a.download = 'index.html';
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+        aStatus('index.html download ho gayi. Ab isay GitHub par upload karo.', 'ok');
+      } catch {
+        aStatus('Download yahan nahi chal saka. "Show and copy code" use karo.', 'bad');
+      }
+      return;
+    }
+    if (act === 'hash') {
+      const v = $('#aNewPass').value;
+      if (v.length < 10) { aStatus('Password kam az kam 10 characters ka rakho.', 'bad'); return; }
+      try { $('#aHashOut').value = `const ADMIN_HASH = '${await sha256(v)}';`; $('#aHashOut').select(); aStatus('Line tayyar hai, copy karo.', 'ok'); }
+      catch { aStatus('Hash banane ke liye site https par kholo.', 'bad'); }
+      return;
+    }
+    if (act === 'discard') {
+      if (!confirm('Draft hata kar file wali list par wapas jayen?')) return;
+      lsDel(DKEY); location.reload(); return;
+    }
+    if (act === 'clearres') {
+      lsDel(RKEY); aStatus('Reserved clear ho gaye. Page reload karo.', 'ok');
+    }
+  });
+
+  aDlg.addEventListener('click', (e) => { if (e.target === $('#adminWrap')) aDlg.close(); });
+  aDlg.addEventListener('close', () => {
+    if (location.hash === '#admin') history.replaceState(null, '', location.pathname + location.search);
+  });
+  window.addEventListener('hashchange', () => { if (location.hash === '#admin') openAdmin(); });
+  setTimeout(() => { if (location.hash === '#admin') openAdmin(); }, 0);
 
   // ---------- go ----------
   renderHero();
